@@ -12,7 +12,7 @@ func IsValid(name string) bool {
 		(patterns.IsSnakeCase(name) || isAlmostScreamingSnakeCase(name))
 }
 
-// Determines if a filename is SCREAMING_SNAKE_CASE with a snake_case file extension.
+// Determines if a filename is SCREAMING_SNAKE_CASE with an optional snake_case file extension.
 func isAlmostScreamingSnakeCase(name string) bool {
 	lastIndex := strings.LastIndex(name, ".")
 	if lastIndex == -1 {
