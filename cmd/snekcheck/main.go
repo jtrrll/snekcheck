@@ -44,6 +44,12 @@ func main() {
 	if cli.Parse(os.Args) != nil {
 		panic("failed to parse command line flags and arguments")
 	}
+
+	if *help {
+		cli.Usage()
+		exit(0)
+	}
+
 	paths := cli.Args()[1:]
 	absPaths := make([]files.Path, len(paths))
 	for i, path := range paths {
@@ -58,11 +64,6 @@ func main() {
 		exit(1)
 	}
 
-	// Either print help or run with config.
-	if *help {
-		cli.Usage()
-		exit(0)
-	}
 	success, err := Run(Config{
 		Fs:    rootFs,
 		Paths: absPaths,

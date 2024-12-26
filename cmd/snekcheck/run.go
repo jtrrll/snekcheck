@@ -54,7 +54,7 @@ func Run(config Config) (success bool, err error) {
 		if config.Fs.Rename(path.String(), newPath.String()) != nil {
 			panic(fmt.Errorf("unable to rename %s to %s", path.String(), newPath.String()))
 		}
-		logger.Print("", "FIXED", newPath)
+		logger.Print("", "FIXED", path)
 		renamedPaths = append(renamedPaths, struct {
 			old files.Path
 			new files.Path
