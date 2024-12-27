@@ -4,21 +4,15 @@ root="/tmp/snekcheck_test"
 bin="./result/bin/snekcheck"
 
 create_valid_directory() {
-  dir_name=$(tr -dc a-z0-9 </dev/urandom | head -c 13)
+  dir_name=$(echo "$RANDOM" | md5sum | head -c 20)
   mkdir --parent "$1"/"$dir_name"
   echo "$1"/"$dir_name"
 }
 create_valid_file() {
-  file_name=$(tr -dc a-z0-9 </dev/urandom | head -c 13)
+  file_name=$(echo "$RANDOM" | md5sum | head -c 20)
   mkdir --parent "$1"
   touch "$1"/"$file_name"
   echo "$1"/"$file_name"
-
-  mkdir --parent "$1"
-  filename=$(mktemp --tmpdir="$1" --quiet XXXvalidXXX)
-  lowercase=$(echo "$filename" | tr '[:upper:]' '[:lower:]')
-  mv "$filename" "$lowercase"
-  echo "$lowercase"
 }
 create_invalid_directory() {
   mkdir --parent "$1"

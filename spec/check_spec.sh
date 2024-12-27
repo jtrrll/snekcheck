@@ -27,6 +27,13 @@ Describe "check"
         The stderr should include "$(basename "$invalid")"
         The file "$invalid" should be exist
       End
+
+      It "succeeds with a limited depth"
+        When call "$bin" --depth 0 "$root"
+        The status should be success
+        The stderr should not include "$(basename "$invalid")"
+        The file "$invalid" should be exist
+      End
     End
 
     Context "and one invalid directory"
@@ -37,6 +44,13 @@ Describe "check"
         When call "$bin" "$root"
         The status should be failure
         The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should be exist
+      End
+
+      It "succeeds with a limited depth"
+        When call "$bin" --depth 0 "$root"
+        The status should be success
+        The stderr should not include "$(basename "$invalid")"
         The file "$invalid" should be exist
       End
     End

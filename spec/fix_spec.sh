@@ -21,8 +21,36 @@ Describe "fix"
       create_and_assign_invalid_file() { invalid=$(create_invalid_file "$root"); }
       BeforeEach "create_and_assign_invalid_file"
 
-      It "succeeds"
+      It "succeeds given the root"
         When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root twice"
+        When call "$bin" --fix "$root" "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file"
+        When call "$bin" --fix "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file twice"
+        When call "$bin" --fix "$invalid" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root and the invalid file"
+        When call "$bin" --fix "$root" "$invalid"
         The status should be success
         The stderr should include "$(basename "$invalid")"
         The file "$invalid" should not be exist
@@ -35,6 +63,41 @@ Describe "fix"
 
       It "succeeds"
         When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root"
+        When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root twice"
+        When call "$bin" --fix "$root" "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid directory"
+        When call "$bin" --fix "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file directory"
+        When call "$bin" --fix "$invalid" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root and the invalid directory"
+        When call "$bin" --fix "$root" "$invalid"
         The status should be success
         The stderr should include "$(basename "$invalid")"
         The file "$invalid" should not be exist
