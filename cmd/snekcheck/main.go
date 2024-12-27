@@ -4,22 +4,20 @@
 Usage:
 
 	snekcheck <flag> ... <path> ...
-
-If the `--fix` flag is specified, `snekcheck` will attempt to correct invalid filenames.
 */
 package main
 
 import (
-	"flag"
 	"fmt"
+	"math"
 	"os"
+	"path/filepath"
 	"snekcheck/internal/files"
-	"strings"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/log"
-	"github.com/go-git/go-billy/v5"
 	"github.com/go-git/go-billy/v5/osfs"
+	"github.com/spf13/pflag"
 )
 
 var (
@@ -28,69 +26,59 @@ var (
 	logger = configureLogger()
 )
 
-// CLI flags.
-// TODO: Use a better flag library.
-var (
-	fix = flag.Bool("fix", false, "Whether snekcheck should attempt to correct invalid filenames")
-)
-
-// The snekcheck CLI.
+// The snekcheck CLI builds a runtime configuration for the core process.
 // Will exit with a non-zero exit code upon failure.
 func main() {
 	// Initialize filesystem.
 	rootFs := osfs.New("/")
-	pwd, pwdErr := os.Getwd()
-	if pwdErr != nil {
-		panic("could not determine present working directory")
+
+	// Parse CLI flags.
+	cli := pflag.NewFlagSet("flags", pflag.ExitOnError)
+	cli.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+		fmt.Fprint(os.Stderr, cli.FlagUsages())
+	}
+	depth := cli.UintP("depth", "d", math.MaxUint8, "The number of levels to descend into a directory")
+	fix := cli.BoolP("fix", "f", false, "Whether to correct invalid filenames")
+	help := cli.BoolP("help", "h", false, "Print usage help")
+	if cli.Parse(os.Args) != nil {
+		panic("failed to parse command line flags and arguments")
 	}
 
-	// Parse CLI flags and args.
-	flag.Parse()
-
-	paths, pathsErr := absPaths(rootFs, pwd, flag.Args())
-	if pathsErr != nil {
-		logger.Error(pathsErr)
-		exit(1)
+	if *help {
+		cli.Usage()
+		exit(0)
 	}
-	if len(paths) == 0 {
+
+	paths := cli.Args()[1:]
+	absPaths := make([]files.Path, len(paths))
+	for i, path := range paths {
+		absPath, err := filepath.Abs(path)
+		if err != nil {
+			panic(err)
+		}
+		absPaths[i] = files.NewPath(absPath)
+	}
+	if len(absPaths) == 0 {
 		logger.Error("no valid files or directories specified")
 		exit(1)
 	}
 
-	// Run sneckcheck.
-	if *fix {
-		Fix(rootFs, paths)
-		exit(0)
-	}
-
-	_, invalidPaths := Check(rootFs, paths)
-	if len(invalidPaths) != 0 {
+	success, err := Run(Config{
+		Fs:    rootFs,
+		Paths: absPaths,
+		Depth: *depth,
+		Fix:   *fix,
+	})
+	if err != nil {
+		logger.Error(err)
 		exit(1)
 	}
-	exit(0)
-}
-
-// Converts potentially relative paths to separated, absolute paths.
-// Errors if any provided path does not exist.
-func absPaths(fs billy.Filesystem, pwd string, paths []string) (absPaths []files.Path, err error) {
-	if fs == nil {
-		panic("invalid filesystem")
+	if success {
+		exit(0)
+	} else {
+		exit(1)
 	}
-
-	absPaths = make([]files.Path, len(paths))
-	for i, path := range paths {
-		absPath := path
-		if !strings.HasPrefix(path, "/") {
-			absPath = fs.Join(pwd, path)
-		}
-		_, statErr := fs.Stat(absPath)
-		if statErr != nil {
-			err = fmt.Errorf("no such file or directory: %s", path)
-			return
-		}
-		absPaths[i] = files.NewPath(absPath)
-	}
-	return
 }
 
 // Configures the CLI logger.
@@ -114,24 +102,4 @@ func exit(code uint8) {
 		panic(fmt.Errorf("invalid exit code: %d", code))
 	}
 	os.Exit(int(code))
-}
-
-// Parses gitignore patterns in a single directory
-func parseGitIgnorePatterns(fs billy.Filesystem, path files.Path) files.GitIgnore {
-	patterns, ignoreErr := files.ParseGitIgnore(fs, path)
-	if ignoreErr != nil {
-		patterns = nil
-	}
-	return patterns
-}
-
-// Parses the list of global gitignore patterns.
-// Produces an empty list of patterns upon failure.
-func loadGlobalGitIgnore(fs billy.Filesystem) files.GitIgnore {
-	globalIgnorePatterns, ignoreErr := files.GlobalGitIgnorePatterns(fs)
-	if ignoreErr != nil {
-		logger.Warn(ignoreErr)
-		globalIgnorePatterns = nil
-	}
-	return globalIgnorePatterns
 }

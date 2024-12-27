@@ -16,6 +16,7 @@ func TestIsValid(t *testing.T) {
 			"LICENSE",
 			"README.md",
 			"snake_test.go",
+			"SPEC.TEST.txt",
 		}
 		for _, input := range testCases {
 			t.Run(input, func(t *testing.T) {
@@ -30,6 +31,7 @@ func TestIsValid(t *testing.T) {
 			"snake-case",
 			"Readme.md",
 			"snake.PNG",
+			"snake.SNAKE.txt",
 		}
 		for _, input := range testCases {
 			t.Run(input, func(t *testing.T) {

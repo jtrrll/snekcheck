@@ -1,26 +1,124 @@
 # shellcheck shell=sh
 
 Describe "fix"
-  Context "with an empty, valid directory"
+  Context "with an empty directory"
     It "succeeds"
       When call "$bin" --fix "$root"
       The status should be success
     End
   End
 
-  Context "with a single invalid file"
-    create_invalid_file() { touch "$root"/InVaLiD; }
-    BeforeEach "create_invalid_file"
+  Context "with no subdirectories"
+    create_valid_files() { for _ in {1.."$1"}; do create_valid_file "$root"; done; }
+    BeforeEach "create_valid_files 200"
 
     It "succeeds"
       When call "$bin" --fix "$root"
       The status should be success
     End
 
-    It "renames the file"
+    Context "and one invalid file"
+      create_and_assign_invalid_file() { invalid=$(create_invalid_file "$root"); }
+      BeforeEach "create_and_assign_invalid_file"
+
+      It "succeeds given the root"
+        When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root twice"
+        When call "$bin" --fix "$root" "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file"
+        When call "$bin" --fix "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file twice"
+        When call "$bin" --fix "$invalid" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root and the invalid file"
+        When call "$bin" --fix "$root" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+    End
+
+    Context "and one invalid directory"
+      create_and_assign_invalid_directory() { invalid=$(create_invalid_directory "$root"); }
+      BeforeEach "create_and_assign_invalid_directory"
+
+      It "succeeds"
+        When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root"
+        When call "$bin" --fix "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root twice"
+        When call "$bin" --fix "$root" "$root"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid directory"
+        When call "$bin" --fix "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the invalid file directory"
+        When call "$bin" --fix "$invalid" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+
+      It "succeeds given the root and the invalid directory"
+        When call "$bin" --fix "$root" "$invalid"
+        The status should be success
+        The stderr should include "$(basename "$invalid")"
+        The file "$invalid" should not be exist
+      End
+    End
+  End
+
+  Context "with many subdirectories"
+    create_valid_files() { for _ in {1.."$1"}; do create_valid_file "$2"; done; }
+    BeforeEach "create_valid_files 200 $root"
+    create_valid_directories() {
+      for _ in {1.."$1"}; do
+        dir=$(create_valid_directory "$root")
+        create_valid_files "$1" "$dir"
+      done
+    }
+    BeforeEach "create_valid_directories 200"
+    
+    It "succeeds"
       When call "$bin" --fix "$root"
-      The file "$root"/InVaLiD should not be exist
-      The file "$root"/invalid should be exist
+      The status should be success
     End
   End
 End

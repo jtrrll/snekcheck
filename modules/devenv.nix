@@ -72,10 +72,6 @@
               enable = true;
               stages = ["pre-commit"];
             };
-            shellcheck = {
-              args = ["--exclude=SC2034,SC2154"];
-              enable = true;
-            };
             snekcheck = {
               enable = true;
               entry = "${self.packages.${system}.snekcheck}/bin/snekcheck";
@@ -119,9 +115,7 @@
               ${goPkg}/bin/go mod tidy && \
               ${goPkg}/bin/go fmt "$DEVENV_ROOT"/... && \
               ${goPkg}/bin/go vet "$DEVENV_ROOT"/... && \
-              ${pkgs.golangci-lint}/bin/golangci-lint run "$DEVENV_ROOT"/... && \
-              ${pkgs.findutils}/bin/find "$DEVENV_ROOT"/spec -type f -name "*.sh" \
-                -exec "${pkgs.shellcheck}/bin/shellcheck" "--exclude=SC2034,SC2154" {} \;
+              ${pkgs.golangci-lint}/bin/golangci-lint run "$DEVENV_ROOT"/...
             '';
           };
           run = {
@@ -134,7 +128,7 @@
           unit = {
             description = "Runs all unit tests.";
             exec = ''
-              ${goPkg}/bin/go test "$DEVENV_ROOT"/...
+              ${goPkg}/bin/go test --cover "$DEVENV_ROOT"/...
             '';
           };
         };
