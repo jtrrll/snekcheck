@@ -29,8 +29,9 @@ spec_helper_precheck() {
 
 spec_helper_configure() {
   create_root() { mkdir --parent "$root"; }
-  before_each "create_root"
+  delete_root() { rm --force --recursive "$root"; }
 
-  delete_root() { rm --recursive "$root"; }
+  before_all "delete_root"
+  before_each "create_root"
   after_each "delete_root"
 }
