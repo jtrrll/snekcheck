@@ -8,16 +8,12 @@ import (
 // A node in a tree with unique children.
 type UniqueNode[T comparable] map[T]UniqueNode[T]
 
-func NewUniqueTree[T comparable]() UniqueNode[T] {
-	return make(map[T]UniqueNode[T])
-}
-
 // Adds a path to the tree by connecting any intermediate nodes.
 func (tree UniqueNode[T]) AddPath(path []T) UniqueNode[T] {
 	node := tree
 	for _, part := range path {
 		if _, exists := node[part]; !exists {
-			node[part] = NewUniqueTree[T]()
+			node[part] = make(map[T]UniqueNode[T])
 		}
 		node = node[part]
 	}
