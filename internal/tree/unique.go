@@ -1,4 +1,4 @@
-// TODO: package comment
+// A collection of tree-like data structures.
 package tree
 
 import (
@@ -32,15 +32,15 @@ func (tree UniqueNode[T]) FindByPath(path []T) UniqueNode[T] {
 	return node
 }
 
-// Iterates over the full paths of a tree, always yielding parent nodes before their children.
-func (tree UniqueNode[T]) All() iter.Seq[[]T] {
+// Iterates over the nodes of the tree by yielding root nodes before its children.
+func (tree UniqueNode[T]) IterPreOrder() iter.Seq[[]T] {
 	return func(yield func(path []T) bool) {
 		for id, node := range tree {
 			path := []T{id}
 			if !yield(path) {
 				return
 			}
-			for childPath := range node.All() {
+			for childPath := range node.IterPreOrder() {
 				if !yield(append(path, childPath...)) {
 					return
 				}

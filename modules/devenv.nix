@@ -98,7 +98,10 @@
           demo = {
             description = "Generates a demo GIF.";
             exec = ''
-              ${pkgs.uutils-coreutils-noprefix}/bin/printf "TODO\n"
+              PATH="$DEVENV_ROOT/result/bin:${pkgs.bashInteractive}/bin:$PATH"
+
+              build && \
+              ${pkgs.vhs}/bin/vhs "$DEVENV_ROOT"/demo.tape
             '';
           };
           e2e = {
@@ -111,7 +114,7 @@
           lint = {
             description = "Lints the project.";
             exec = ''
-              nix fmt "$DEVENV_ROOT" -- --quiet
+              nix fmt "$DEVENV_ROOT" -- --quiet && \
               ${goPkg}/bin/go mod tidy && \
               ${goPkg}/bin/go fmt "$DEVENV_ROOT"/... && \
               ${goPkg}/bin/go vet "$DEVENV_ROOT"/... && \
