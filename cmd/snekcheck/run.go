@@ -24,6 +24,13 @@ type Config struct {
 
 // The core snekcheck process.
 func Run(config Config) cli.Error {
+	if config.Fs == nil {
+		panic("invalid filesystem")
+	}
+	if len(config.Paths) == 0 {
+		return noPathsProvidedErr
+	}
+
 	// Build file tree.
 	var fileTree tree.UniqueNode[string] = make(map[string]tree.UniqueNode[string])
 	slices.SortFunc(config.Paths, func(a, b files.Path) int {
@@ -96,7 +103,7 @@ func Run(config Config) cli.Error {
 		}
 
 		process(startPath)
-		for path := range startNode.All() {
+		for path := range startNode.IterPreOrder() {
 			fullPath := append(startPath, path...)
 			seenPaths[fullPath.String()] = struct{}{}
 			process(fullPath)

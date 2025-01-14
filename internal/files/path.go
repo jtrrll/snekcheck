@@ -1,4 +1,4 @@
-// TODO: Package comment
+// A collection of utiliies for file operations.
 package files
 
 import (

@@ -1,4 +1,4 @@
-// TODO: Package comment
+// A collection of regular expressions for filenames.
 package patterns
 
 import "regexp"

@@ -1,4 +1,4 @@
-// TODO: package comment
+// A collection of utilities for building command-line interfaces.
 package cli
 
 import (
