@@ -32,7 +32,7 @@ func Run(config Config) cli.Error {
 	}
 
 	// Build file tree.
-	var fileTree tree.UniqueNode[string] = make(map[string]tree.UniqueNode[string])
+	fileTree := tree.NewUniqueTree[string]()
 	slices.SortFunc(config.Paths, func(a, b files.Path) int {
 		return len(a) - len(b)
 	})

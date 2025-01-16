@@ -6,6 +6,7 @@
 <!-- markdownlint-enable MD013 -->
 
 An opinionated filename linter that loves snake case.
+
 ![Demo](./demo.gif)
 
 ## Basic Usage
@@ -36,7 +37,7 @@ An opinionated filename linter that loves snake case.
 
 ## Advanced Usage
 
-- To print a help message, specify the --help flag.
+- To print a help message, specify the `--help` flag.
 
    <!-- markdownlint-disable MD013 -->
    ```sh
@@ -53,7 +54,7 @@ Be careful, as the renaming strategy may not produce the results you want.
    ```
    <!-- markdownlint-enable MD013 -->
 
-- To limit directory traversal, specify a depth limit.
+- To limit directory traversal, specify the `--depth` flag and a depth limit.
 This can be useful for only checking top-level names or
 for improving performance on large file systems.
 

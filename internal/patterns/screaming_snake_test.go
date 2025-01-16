@@ -44,9 +44,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 				"FILE1",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					assert.True(t, patterns.IsScreamingSnakeCase(input))
-				})
+				assert.True(t, patterns.IsScreamingSnakeCase(input))
 			}
 		})
 		t.Run("identifies invalid screaming snake case", func(t *testing.T) {
@@ -57,9 +55,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 				"snake_case",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					assert.False(t, patterns.IsScreamingSnakeCase(input))
-				})
+				assert.False(t, patterns.IsScreamingSnakeCase(input))
 			}
 		})
 	})
@@ -73,10 +69,8 @@ func TestScreamingSnakeCase(t *testing.T) {
 				"_DO_NOT_CHANGE_THIS_PLEASE_",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					require.True(t, patterns.IsScreamingSnakeCase(input))
-					assert.Equal(t, input, patterns.ToScreamingSnakeCase(input))
-				})
+				require.True(t, patterns.IsScreamingSnakeCase(input))
+				assert.Equal(t, input, patterns.ToScreamingSnakeCase(input))
 			}
 		})
 		t.Run("converts invalid screaming snake case to valid screaming snake case", func(t *testing.T) {
@@ -89,13 +83,11 @@ func TestScreamingSnakeCase(t *testing.T) {
 				{input: " SNake   caSE ", output: "_SNAKE___CASE_"},
 			}
 			for _, tc := range testCases {
-				t.Run(tc.input, func(t *testing.T) {
-					require.False(t, patterns.IsScreamingSnakeCase(tc.input))
-					require.True(t, patterns.IsScreamingSnakeCase(tc.output))
-					actual := patterns.ToScreamingSnakeCase(tc.input)
-					assert.Equal(t, tc.output, actual)
-					assert.True(t, patterns.IsScreamingSnakeCase(actual))
-				})
+				require.False(t, patterns.IsScreamingSnakeCase(tc.input))
+				require.True(t, patterns.IsScreamingSnakeCase(tc.output))
+				actual := patterns.ToScreamingSnakeCase(tc.input)
+				assert.Equal(t, tc.output, actual)
+				assert.True(t, patterns.IsScreamingSnakeCase(actual))
 			}
 		})
 	})
