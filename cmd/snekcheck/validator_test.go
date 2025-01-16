@@ -19,9 +19,7 @@ func TestIsValid(t *testing.T) {
 			"SPEC.TEST.txt",
 		}
 		for _, input := range testCases {
-			t.Run(input, func(t *testing.T) {
-				assert.True(t, main.IsValid(input))
-			})
+			assert.True(t, main.IsValid(input))
 		}
 	})
 	t.Run("identifies invalid file names", func(t *testing.T) {
@@ -34,9 +32,7 @@ func TestIsValid(t *testing.T) {
 			"snake.SNAKE.txt",
 		}
 		for _, input := range testCases {
-			t.Run(input, func(t *testing.T) {
-				assert.False(t, main.IsValid(input))
-			})
+			assert.False(t, main.IsValid(input))
 		}
 	})
 }

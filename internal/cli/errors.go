@@ -11,7 +11,7 @@ import (
 // A command-line error with a status code.
 type Error interface {
 	error
-	Code() uint8
+	ExitCode() uint8
 }
 
 // Terminates the current program.
@@ -20,10 +20,15 @@ func Exit(err Error) {
 	if err == nil {
 		os.Exit(0)
 	}
-	code := err.Code()
+
+	code := err.ExitCode()
 	if code == 0 {
 		os.Exit(0)
 	}
+	if code > 125 {
+		panic("invalid exit code")
+	}
+
 	fmt.Fprint(os.Stderr, color.RedString("error: %s\n", err.Error()))
 	os.Exit(int(code))
 }

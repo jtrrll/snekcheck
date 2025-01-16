@@ -43,9 +43,7 @@ func TestPosix(t *testing.T) {
 				"FILE1.txt",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					assert.True(t, patterns.IsPosixFileName(input))
-				})
+				assert.True(t, patterns.IsPosixFileName(input))
 			}
 		})
 		t.Run("identifies invalid POSIX filenames", func(t *testing.T) {
@@ -56,9 +54,7 @@ func TestPosix(t *testing.T) {
 				"file(12).pdf",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					assert.False(t, patterns.IsPosixFileName(input))
-				})
+				assert.False(t, patterns.IsPosixFileName(input))
 			}
 		})
 	})
@@ -70,10 +66,8 @@ func TestPosix(t *testing.T) {
 				"_DO_NOT_CHANGE_THIS_PLEASE___",
 			}
 			for _, input := range testCases {
-				t.Run(input, func(t *testing.T) {
-					require.True(t, patterns.IsPosixFileName(input))
-					assert.Equal(t, input, patterns.ToPosixFileName(input))
-				})
+				require.True(t, patterns.IsPosixFileName(input))
+				assert.Equal(t, input, patterns.ToPosixFileName(input))
 			}
 		})
 		t.Run("converts invalid POSIX filenames to valid POSIX filenames", func(t *testing.T) {
@@ -86,13 +80,11 @@ func TestPosix(t *testing.T) {
 				{input: "__012 345.md", output: "__012_345.md"},
 			}
 			for _, tc := range testCases {
-				t.Run(tc.input, func(t *testing.T) {
-					require.False(t, patterns.IsPosixFileName(tc.input))
-					require.True(t, patterns.IsPosixFileName(tc.output))
-					actual := patterns.ToPosixFileName(tc.input)
-					assert.Equal(t, tc.output, actual)
-					assert.True(t, patterns.IsPosixFileName(actual))
-				})
+				require.False(t, patterns.IsPosixFileName(tc.input))
+				require.True(t, patterns.IsPosixFileName(tc.output))
+				actual := patterns.ToPosixFileName(tc.input)
+				assert.Equal(t, tc.output, actual)
+				assert.True(t, patterns.IsPosixFileName(actual))
 			}
 		})
 	})
