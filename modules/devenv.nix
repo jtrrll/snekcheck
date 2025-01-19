@@ -100,8 +100,14 @@
             exec = ''
               PATH="$DEVENV_ROOT/result/bin:${pkgs.bashInteractive}/bin:$PATH"
 
+              mkdir --parents "$DEVENV_ROOT"/demo
+              for i in $(seq 1 3); do touch "$DEVENV_ROOT"/demo/"$i"valid; done;
+              for i in $(seq 1 3); do touch "$DEVENV_ROOT"/demo/"$i"InVaLiD; done;
+
               build && \
               ${pkgs.vhs}/bin/vhs "$DEVENV_ROOT"/demo.tape
+
+              rm --force --recursive "$DEVENV_ROOT"/demo
             '';
           };
           e2e = {

@@ -7,12 +7,20 @@ Set Theme "catppuccin-frappe"
 Set TypingSpeed 100ms
 
 Set Width 800
-Set Height 400
+Set Height 450
 
 Require snekcheck
 
 Sleep 1000ms
+
 Type "snekcheck ."
 Sleep 500ms
 Enter
+
+Sleep 1000ms
+
+Type "snekcheck --fix ."
+Sleep 500ms
+Enter
+
 Sleep 10000ms
