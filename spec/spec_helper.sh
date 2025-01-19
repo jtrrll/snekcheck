@@ -5,21 +5,21 @@ bin="./result/bin/snekcheck"
 
 create_valid_directory() {
   dir_name=$(echo "$RANDOM" | md5sum | head -c 20)
-  mkdir --parent "$1"/"$dir_name"
+  mkdir --parents "$1"/"$dir_name"
   echo "$1"/"$dir_name"
 }
 create_valid_file() {
   file_name=$(echo "$RANDOM" | md5sum | head -c 20)
-  mkdir --parent "$1"
+  mkdir --parents "$1"
   touch "$1"/"$file_name"
   echo "$1"/"$file_name"
 }
 create_invalid_directory() {
-  mkdir --parent "$1"
+  mkdir --parents "$1"
   mktemp --directory --tmpdir="$1" --quiet XXXInVaLiDXXX
 }
 create_invalid_file() {
-  mkdir --parent "$1"
+  mkdir --parents "$1"
   mktemp --tmpdir="$1" --quiet XXXInVaLiDXXX
 }
 
