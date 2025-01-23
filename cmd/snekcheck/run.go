@@ -78,7 +78,7 @@ func Run(config Config) cli.Error {
 		if config.Verbose {
 			color.Yellow("%s -> %s\n", path, newPath)
 		} else {
-			fmt.Print(color.YellowString("."))
+			fmt.Print(color.YellowString("C"))
 		}
 		renamedPaths = append(renamedPaths, struct {
 			old files.Path

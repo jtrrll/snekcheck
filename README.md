@@ -9,7 +9,7 @@ An opinionated filename linter that loves snake case.
 
 ![Demo](./demo.gif)
 
-## Basic Usage
+## Usage
 
 - To lint several filenames, provide them in a list.
 
@@ -35,7 +35,7 @@ An opinionated filename linter that loves snake case.
    ```
    <!-- markdownlint-enable MD013 -->
 
-## Advanced Usage
+### Flags
 
 - To print a help message, specify the `--help` flag.
 
@@ -71,3 +71,17 @@ for improving performance on large file systems.
    snekcheck --verbose <filename> ...
    ```
    <!-- markdownlint-enable MD013 -->
+
+## Build From Source
+
+1. Install [Nix](https://zero-to-nix.com/start/install/)
+2. Clone this repository
+3. Run the following command:
+
+   <!-- markdownlint-disable MD013 -->
+   ```sh
+   nix develop --impure -c build
+   ```
+   <!-- markdownlint-enable MD013 -->
+
+4. Find the `snekcheck` binary at `result/bin/snekcheck`

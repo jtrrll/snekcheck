@@ -120,6 +120,7 @@
           lint = {
             description = "Lints the project.";
             exec = ''
+              ${self.packages.${system}.snekcheck}/bin/snekcheck --fix "$DEVENV_ROOT" && \
               nix fmt "$DEVENV_ROOT" -- --quiet && \
               ${goPkg}/bin/go mod tidy && \
               ${goPkg}/bin/go fmt "$DEVENV_ROOT"/... && \
