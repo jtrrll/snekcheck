@@ -31,6 +31,14 @@
           printf "\033[0;1;36mDEVSHELL ACTIVATED\033[0m\n"
         '';
 
+        env = let
+          PROJECT_ROOT = config.devenv.shells.default.env.DEVENV_ROOT;
+        in {
+          inherit PROJECT_ROOT;
+          GO_ROOT = "${PROJECT_ROOT}/go";
+          NIX_ROOT = "${PROJECT_ROOT}/nix";
+        };
+
         env-help.enable = true;
 
         languages = {
@@ -58,9 +66,12 @@
             };
             end-of-file-fixer.enable = true;
             flake-checker.enable = true;
-            gofmt.enable = true;
-            golangci-lint.enable = true;
-            govet.enable = true;
+            lint = {
+              enable = true;
+              entry = "lint";
+              name = "lint";
+              pass_filenames = false;
+            };
             markdownlint.enable = true;
             mixed-line-endings.enable = true;
             nil.enable = true;
@@ -85,60 +96,65 @@
           bench = {
             description = "Runs all benchmark tests.";
             exec = ''
-              ${goPkg}/bin/go test "$DEVENV_ROOT"/... -bench=.
+              cd "$GO_ROOT" && \
+              ${goPkg}/bin/go test ./... -bench=.
             '';
           };
           build = {
             description = "Builds the project binary.";
             exec = ''
-              ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix && \
-              nix build "$DEVENV_ROOT"#snekcheck
+              (cd "$GO_ROOT" && \
+              ${goPkg}/bin/go mod tidy && \
+              ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix) && \
+              nix build "$PROJECT_ROOT"#snekcheck
             '';
           };
           demo = {
             description = "Generates a demo GIF.";
             exec = ''
-              PATH="$DEVENV_ROOT/result/bin:${pkgs.bashInteractive}/bin:$PATH"
+              PATH="$PROJECT_ROOT/result/bin:${pkgs.bashInteractive}/bin:$PATH"
 
-              mkdir --parents "$DEVENV_ROOT"/demo
-              for i in $(seq 1 3); do touch "$DEVENV_ROOT"/demo/"$i"valid; done;
-              for i in $(seq 1 3); do touch "$DEVENV_ROOT"/demo/"$i"InVaLiD; done;
+              mkdir --parents "$PROJECT_ROOT"/demo
+              for i in $(seq 1 3); do touch "$PROJECT_ROOT"/demo/"$i"valid; done;
+              for i in $(seq 1 3); do touch "$PROJECT_ROOT"/demo/"$i"InVaLiD; done;
 
               build && \
-              ${pkgs.vhs}/bin/vhs "$DEVENV_ROOT"/demo.tape
+              ${pkgs.vhs}/bin/vhs "$PROJECT_ROOT"/demo.tape
 
-              rm --force --recursive "$DEVENV_ROOT"/demo
+              rm --force --recursive "$PROJECT_ROOT"/demo
             '';
           };
           e2e = {
             description = "Runs all end-to-end tests.";
             exec = ''
               build && \
-              ${pkgs.shellspec}/bin/shellspec --no-warning-as-failure "$DEVENV_ROOT"
+              ${pkgs.shellspec}/bin/shellspec --no-warning-as-failure "$PROJECT_ROOT"
             '';
           };
           lint = {
             description = "Lints the project.";
             exec = ''
-              ${self.packages.${system}.snekcheck}/bin/snekcheck --fix "$DEVENV_ROOT" && \
-              nix fmt "$DEVENV_ROOT" -- --quiet && \
+              ${self.packages.${system}.snekcheck}/bin/snekcheck --fix "$PROJECT_ROOT" && \
+              nix fmt "$PROJECT_ROOT" -- --quiet && \
+              (cd "$GO_ROOT" && \
               ${goPkg}/bin/go mod tidy && \
-              ${goPkg}/bin/go fmt "$DEVENV_ROOT"/... && \
-              ${goPkg}/bin/go vet "$DEVENV_ROOT"/... && \
-              ${pkgs.golangci-lint}/bin/golangci-lint run "$DEVENV_ROOT"/...
+              ${goPkg}/bin/go fmt ./... && \
+              ${goPkg}/bin/go vet ./... && \
+              ${pkgs.golangci-lint}/bin/golangci-lint run ./...)
             '';
           };
           run = {
             description = "Runs the project.";
             exec = ''
               ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix && \
-              nix run "$DEVENV_ROOT"#snekcheck -- "$@"
+              nix run "$PROJECT_ROOT"#snekcheck -- "$@"
             '';
           };
           unit = {
             description = "Runs all unit tests.";
             exec = ''
-              ${goPkg}/bin/go test --cover "$DEVENV_ROOT"/...
+              cd "$GO_ROOT" && \
+              ${goPkg}/bin/go test --cover ./...
             '';
           };
         };
