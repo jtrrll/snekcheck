@@ -10,12 +10,12 @@ import (
 
 func BenchmarkSnakeCase(b *testing.B) {
 	b.Run("IsSnakeCase()", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
+		for range b.N {
 			patterns.IsSnakeCase("Bench mark")
 		}
 	})
 	b.Run("ToSnakeCase()", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
+		for range b.N {
 			patterns.ToSnakeCase("Bench mark")
 		}
 	})
@@ -34,7 +34,9 @@ func FuzzSnakeCase(f *testing.F) {
 func TestSnakeCase(t *testing.T) {
 	t.Parallel()
 	t.Run("IsSnakeCase()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("identifies valid snake case", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"",
 				"__",
@@ -48,6 +50,7 @@ func TestSnakeCase(t *testing.T) {
 			}
 		})
 		t.Run("identifies invalid snake case", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"Snake",
 				"snake case 123",
@@ -60,7 +63,9 @@ func TestSnakeCase(t *testing.T) {
 		})
 	})
 	t.Run("ToSnakeCase()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("does not change valid snake case", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"",
 				"__",
@@ -74,6 +79,7 @@ func TestSnakeCase(t *testing.T) {
 			}
 		})
 		t.Run("converts invalid snake case to valid snake case", func(t *testing.T) {
+			t.Parallel()
 			testCases := []struct {
 				input  string
 				output string

@@ -1,8 +1,10 @@
 {inputs, ...}: {
   imports = [
     ./devenv.nix
-    ./formatter.nix
     ./package.nix
   ];
+  perSystem = {pkgs, ...}: {
+    formatter = pkgs.alejandra;
+  };
   systems = inputs.nixpkgs.lib.systems.flakeExposed;
 }

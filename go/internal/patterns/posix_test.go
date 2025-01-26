@@ -10,12 +10,12 @@ import (
 
 func BenchmarkPosix(b *testing.B) {
 	b.Run("IsPosixFileName()", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
+		for range b.N {
 			patterns.IsPosixFileName("Bench mark")
 		}
 	})
 	b.Run("ToPosixFileName()", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
+		for range b.N {
 			patterns.ToPosixFileName("Bench mark")
 		}
 	})
@@ -34,7 +34,9 @@ func FuzzPosix(f *testing.F) {
 func TestPosix(t *testing.T) {
 	t.Parallel()
 	t.Run("IsPosixFileName()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("identifies valid POSIX filenames", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"posix",
 				"POSIX_FILE",
@@ -47,6 +49,7 @@ func TestPosix(t *testing.T) {
 			}
 		})
 		t.Run("identifies invalid POSIX filenames", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"-TEST",
 				"lol@email",
@@ -59,7 +62,9 @@ func TestPosix(t *testing.T) {
 		})
 	})
 	t.Run("ToPosixFileName()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("does not change valid POSIX filenames", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"POSIX",
 				".POSIX_123_.md",
@@ -71,6 +76,7 @@ func TestPosix(t *testing.T) {
 			}
 		})
 		t.Run("converts invalid POSIX filenames to valid POSIX filenames", func(t *testing.T) {
+			t.Parallel()
 			testCases := []struct {
 				input  string
 				output string

@@ -11,12 +11,16 @@ import (
 func TestUniqueTree(t *testing.T) {
 	t.Parallel()
 	t.Run("NewUniqueTree()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("creates a tree", func(t *testing.T) {
+			t.Parallel()
 			assert.NotNil(t, tree.NewUniqueTree[string]())
 		})
 	})
 	t.Run("AddPath()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("creates a full path of nodes", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a"},
 				{"a", "b", "c"},
@@ -37,7 +41,9 @@ func TestUniqueTree(t *testing.T) {
 		})
 	})
 	t.Run("FindByPath()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("finds the node at the end of a path", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a"},
 				{"a", "b", "c"},
@@ -53,6 +59,7 @@ func TestUniqueTree(t *testing.T) {
 			}
 		})
 		t.Run("returns nil for an invalid path", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a"},
 				{"a", "b", "c"},
@@ -67,7 +74,9 @@ func TestUniqueTree(t *testing.T) {
 		})
 	})
 	t.Run("IterPreOrder()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("yields every node", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a", "b", "c"},
 				{"a", "d", "e"},
@@ -90,6 +99,7 @@ func TestUniqueTree(t *testing.T) {
 			}
 		})
 		t.Run("yields parent nodes before their children", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a", "b", "c"},
 				{"a", "d", "e"},
@@ -115,6 +125,7 @@ func TestUniqueTree(t *testing.T) {
 			}
 		})
 		t.Run("can break out of iteration", func(t *testing.T) {
+			t.Parallel()
 			testCases := [][]string{
 				{"a", "b", "c"},
 				{"a", "d", "e"},

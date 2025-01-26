@@ -12,7 +12,9 @@ import (
 func TestError(t *testing.T) {
 	t.Parallel()
 	t.Run("Error()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("returns the correct error message", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"an error occurred",
 				"yikes!",
@@ -23,6 +25,7 @@ func TestError(t *testing.T) {
 			}
 		})
 		t.Run("formats correctly as an error", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"an error occurred",
 				"yikes!",
@@ -33,6 +36,7 @@ func TestError(t *testing.T) {
 			}
 		})
 		t.Run("can be wrapped and unwrapped", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"an error occurred",
 				"yikes!",
@@ -45,7 +49,9 @@ func TestError(t *testing.T) {
 		})
 	})
 	t.Run("ExitCode()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("produces the correct exit code", func(t *testing.T) {
+			t.Parallel()
 			testCases := []uint8{
 				0,
 				1,
