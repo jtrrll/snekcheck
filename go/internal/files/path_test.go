@@ -14,7 +14,9 @@ import (
 func TestPath(t *testing.T) {
 	t.Parallel()
 	t.Run("NewPath()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("creates a path", func(t *testing.T) {
+			t.Parallel()
 			testCases := []string{
 				"",
 				"longstring",
@@ -27,7 +29,9 @@ func TestPath(t *testing.T) {
 		})
 	})
 	t.Run("Base()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("returns the last element", func(t *testing.T) {
+			t.Parallel()
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -38,11 +42,14 @@ func TestPath(t *testing.T) {
 			}
 		})
 		t.Run("panics if the path is empty", func(t *testing.T) {
+			t.Parallel()
 			assert.Panics(t, func() { files.Path{}.Base() })
 		})
 	})
 	t.Run("Parent()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("returns every element except the last element", func(t *testing.T) {
+			t.Parallel()
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -53,11 +60,14 @@ func TestPath(t *testing.T) {
 			}
 		})
 		t.Run("panics if the path is empty", func(t *testing.T) {
+			t.Parallel()
 			assert.Panics(t, func() { files.Path{}.Parent() })
 		})
 	})
 	t.Run("String()", func(t *testing.T) {
+		t.Parallel()
 		t.Run("returns the full path", func(t *testing.T) {
+			t.Parallel()
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -68,6 +78,7 @@ func TestPath(t *testing.T) {
 			}
 		})
 		t.Run("formats correctly as a string", func(t *testing.T) {
+			t.Parallel()
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},

@@ -7,9 +7,7 @@
       version = "0.0";
     };
   in {
-    apps.snekcheck = {
-      program = "${pkg}/bin/snekcheck";
-    };
+    apps.snekcheck.program = "${pkg}/bin/snekcheck";
     packages.snekcheck = pkg;
   };
 }

@@ -21,15 +21,22 @@
         buildInputs = config.packages.snekcheck.nativeBuildInputs;
         goPkg = lib.findFirst (pkg: builtins.match "go" pkg.pname != null) pkgs.go buildInputs;
       in {
-        enterShell = ''
-          printf "   ▄▄▄▄▄    ▄   ▄███▄   █  █▀ ▄█▄     ▄  █ ▄███▄   ▄█▄    █  █▀
-            █     ▀▄   █  █▀   ▀  █▄█   █▀ ▀▄  █   █ █▀   ▀  █▀ ▀▄  █▄█
-          ▄  ▀▀▀▀▄ ██   █ ██▄▄    █▀▄   █   ▀  ██▀▀█ ██▄▄    █   ▀  █▀▄
-           ▀▄▄▄▄▀  █ █  █ █▄   ▄▀ █  █  █▄  ▄▀ █   █ █▄   ▄▀ █▄  ▄▀ █  █
-                   █  █ █ ▀███▀     █   ▀███▀     █  ▀███▀   ▀███▀    █
-                   █   ██          ▀             ▀                   ▀\n" | ${pkgs.lolcat}/bin/lolcat
-          printf "\033[0;1;36mDEVSHELL ACTIVATED\033[0m\n"
-        '';
+        enterShell = "${pkgs.writeShellApplication {
+          name = "splashScreen";
+          runtimeInputs = [
+            pkgs.lolcat
+            pkgs.uutils-coreutils-noprefix
+          ];
+          text = ''
+            printf "     ▄▄▄▄▄    ▄   ▄███▄   █  █▀ ▄█▄     ▄  █ ▄███▄   ▄█▄    █  █▀
+                █     ▀▄   █  █▀   ▀  █▄█   █▀ ▀▄  █   █ █▀   ▀  █▀ ▀▄  █▄█
+              ▄  ▀▀▀▀▄ ██   █ ██▄▄    █▀▄   █   ▀  ██▀▀█ ██▄▄    █   ▀  █▀▄
+               ▀▄▄▄▄▀  █ █  █ █▄   ▄▀ █  █  █▄  ▄▀ █   █ █▄   ▄▀ █▄  ▄▀ █  █
+                       █  █ █ ▀███▀     █   ▀███▀     █  ▀███▀   ▀███▀    █
+                       █   ██          ▀             ▀                   ▀\n" | lolcat
+            printf "\033[0;1;36mDEVSHELL ACTIVATED\033[0m\n"
+          '';
+        }}/bin/splashScreen";
 
         env = let
           PROJECT_ROOT = config.devenv.shells.default.env.DEVENV_ROOT;
@@ -53,7 +60,6 @@
           default_stages = ["pre-push"];
           hooks = {
             actionlint.enable = true;
-            alejandra.enable = true;
             check-added-large-files = {
               enable = true;
               stages = ["pre-commit"];
@@ -83,11 +89,6 @@
               enable = true;
               stages = ["pre-commit"];
             };
-            snekcheck = {
-              enable = true;
-              entry = "${self.packages.${system}.snekcheck}/bin/snekcheck";
-              name = "snekcheck";
-            };
             statix.enable = true;
           };
         };
@@ -102,12 +103,17 @@
           };
           build = {
             description = "Builds the project binary.";
-            exec = ''
-              (cd "$GO_ROOT" && \
-              ${goPkg}/bin/go mod tidy && \
-              ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix) && \
-              nix build "$PROJECT_ROOT"#snekcheck
-            '';
+            exec = "${pkgs.writeShellApplication {
+              name = "build";
+              runtimeInputs = [
+                goPkg
+                inputs.gomod2nix.legacyPackages.${system}.gomod2nix
+              ];
+              text = ''
+                (cd "$GO_ROOT" && go mod tidy && gomod2nix) && \
+                nix build "$PROJECT_ROOT"#snekcheck
+              '';
+            }}/bin/build";
           };
           demo = {
             description = "Generates a demo GIF.";
@@ -133,20 +139,27 @@
           };
           lint = {
             description = "Lints the project.";
-            exec = ''
-              ${self.packages.${system}.snekcheck}/bin/snekcheck --fix "$PROJECT_ROOT" && \
-              nix fmt "$PROJECT_ROOT" -- --quiet && \
-              (cd "$GO_ROOT" && \
-              ${goPkg}/bin/go mod tidy && \
-              ${goPkg}/bin/go fmt ./... && \
-              ${goPkg}/bin/go vet ./... && \
-              ${pkgs.golangci-lint}/bin/golangci-lint run ./...)
-            '';
+            exec = "${pkgs.writeShellApplication {
+              name = "lint";
+              runtimeInputs = [
+                goPkg
+                pkgs.golangci-lint
+                self.packages.${system}.snekcheck
+              ];
+              text = ''
+                snekcheck --fix "$PROJECT_ROOT" && \
+                nix fmt "$PROJECT_ROOT" -- --quiet && \
+                (cd "$GO_ROOT" && go mod tidy && go fmt ./... && go vet ./... && \
+                golangci-lint run ./...)
+              '';
+            }}/bin/lint";
           };
           run = {
             description = "Runs the project.";
             exec = ''
-              ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix && \
+              (cd "$GO_ROOT" && \
+              ${goPkg}/bin/go mod tidy && \
+              ${inputs.gomod2nix.legacyPackages.${system}.gomod2nix}/bin/gomod2nix) && \
               nix run "$PROJECT_ROOT"#snekcheck -- "$@"
             '';
           };

@@ -28,7 +28,7 @@ func Run(config Config) cli.Error {
 		panic("invalid filesystem")
 	}
 	if len(config.Paths) == 0 {
-		return noPathsProvidedErr
+		return errNoPathsProvided
 	}
 
 	// Build file tree.
@@ -38,7 +38,7 @@ func Run(config Config) cli.Error {
 	})
 	for _, path := range config.Paths {
 		if addPathWithChildren(fileTree, config.Fs, path, config.Depth) != nil {
-			return failedToBuildFileTreeErr
+			return errFailedToBuildFileTree
 		}
 	}
 
@@ -124,7 +124,7 @@ func Run(config Config) cli.Error {
 
 	// Terminate.
 	if len(invalidPaths) != 0 {
-		return invalidFileNamesErr
+		return errInvalidFileNames
 	}
 	return nil
 }
@@ -178,7 +178,7 @@ func addPathWithChildren(fileTree tree.UniqueNode[string], fs billy.Filesystem, 
 	return recurse(path, 0)
 }
 
-// Parses gitignore patterns in a single directory
+// Parses gitignore patterns in a single directory.
 func parseGitIgnorePatterns(fs billy.Filesystem, path files.Path) files.GitIgnore {
 	patterns, ignoreErr := files.ParseGitIgnore(fs, path)
 	if ignoreErr != nil {
