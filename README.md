@@ -1,8 +1,9 @@
 # snekcheck
 
 <!-- markdownlint-disable MD013 -->
-![GitHub Actions CI Status](https://img.shields.io/github/actions/workflow/status/jtrrll/snekcheck/ci.yaml?branch=main&logo=github&label=CI)
-![License](https://img.shields.io/github/license/jtrrll/snekcheck?label=License)
+![Version](https://img.shields.io/github/v/tag/jtrrll/snekcheck?label=version&logo=semver&sort=semver)
+![CI Status](https://img.shields.io/github/actions/workflow/status/jtrrll/snekcheck/ci.yaml?branch=main&label=ci&logo=github)
+![License](https://img.shields.io/github/license/jtrrll/snekcheck?label=license&logo=googledocs&logoColor=white)
 <!-- markdownlint-enable MD013 -->
 
 An opinionated filename linter that loves snake case.

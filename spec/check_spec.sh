@@ -13,23 +13,23 @@ Describe "check"
 
   Context "with no subdirectories"
     create_valid_files() { for _ in $(seq 1 "$1"); do create_valid_file "$root"; done; }
-    BeforeEach "create_valid_files 20"
+    BeforeEach "create_valid_files 10 > /dev/null"
 
     It "succeeds"
       When call "$bin" "$root"
       The status should be success
-      The output should include "21 valid filenames"
+      The output should include "11 valid filenames"
       The output should include "0 invalid filenames"
       The length of error should equal 0
     End
 
     Context "and one invalid file"
-      BeforeEach "create_invalid_file $root"
+      BeforeEach "create_invalid_file $root > /dev/null"
 
       It "fails"
         When call "$bin" "$root"
         The status should be failure
-        The output should include "21 valid filenames"
+        The output should include "11 valid filenames"
         The output should include "1 invalid filenames"
         The error should include "invalid filenames found"
       End
@@ -44,12 +44,12 @@ Describe "check"
     End
 
     Context "and one invalid directory"
-      BeforeEach "create_invalid_file $root"
+      BeforeEach "create_invalid_file $root > /dev/null"
 
       It "fails"
         When call "$bin" "$root"
         The status should be failure
-        The output should include "21 valid filenames"
+        The output should include "11 valid filenames"
         The output should include "1 invalid filenames"
         The error should include "invalid filenames found"
       End
@@ -66,19 +66,19 @@ Describe "check"
 
   Context "with many subdirectories"
     create_valid_files() { for _ in $(seq 1 "$1"); do create_valid_file "$2"; done; }
-    BeforeEach "create_valid_files 20 $root"
+    BeforeEach "create_valid_files 10 $root > /dev/null"
     create_valid_directories() {
       for _ in $(seq 1 "$1"); do
         dir=$(create_valid_directory "$root")
         create_valid_files "$1" "$dir"
       done
     }
-    BeforeEach "create_valid_directories 20"
+    BeforeEach "create_valid_directories 10 > /dev/null"
     
     It "succeeds"
       When call "$bin" "$root"
       The status should be success
-      The output should include "441 valid filenames"
+      The output should include "121 valid filenames"
       The output should include "0 invalid filenames"
       The length of error should equal 0
     End
