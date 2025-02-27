@@ -4,7 +4,7 @@
       modules = ../go/gomod2nix.toml;
       pname = "snekcheck";
       src = ../go;
-      version = "0.0";
+      version = "1.0.0";
     };
   in {
     apps.snekcheck.program = "${pkg}/bin/snekcheck";

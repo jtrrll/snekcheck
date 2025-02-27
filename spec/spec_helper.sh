@@ -5,22 +5,52 @@ bin="./result/bin/snekcheck"
 
 create_valid_directory() {
   dir_name=$(echo "$RANDOM" | md5sum | head -c 20)
-  mkdir --parents "$1"/"$dir_name"
-  echo "$1"/"$dir_name"
+  dir_path="$1/$dir_name"
+
+  if [ -d "$dir_path" ]; then
+    create_valid_directory "$1"
+  else
+    mkdir --parents "$dir_path"
+    echo "$dir_path"
+  fi
 }
+
 create_valid_file() {
   file_name=$(echo "$RANDOM" | md5sum | head -c 20)
-  mkdir --parents "$1"
-  touch "$1"/"$file_name"
-  echo "$1"/"$file_name"
+  file_path="$1/$file_name"
+
+  if [ -e "$file_path" ]; then
+    create_valid_file "$1"
+  else
+    mkdir --parents "$1"
+    touch "$file_path"
+    echo "$file_path"
+  fi
 }
+
 create_invalid_directory() {
-  mkdir --parents "$1"
-  mktemp --directory --tmpdir="$1" --quiet XXXInVaLiDXXX
+  dir_name=$(echo "$RANDOM" | md5sum | head -c 20)InVaLiD
+  dir_path="$1/$dir_name"
+
+  if [ -d "$dir_path" ]; then
+    create_valid_directory "$1"
+  else
+    mkdir --parents "$dir_path"
+    echo "$dir_path"
+  fi
 }
+
 create_invalid_file() {
-  mkdir --parents "$1"
-  mktemp --tmpdir="$1" --quiet XXXInVaLiDXXX
+  file_name=$(echo "$RANDOM" | md5sum | head -c 20)InVaLiD
+  file_path="$1/$file_name"
+
+  if [ -e "$file_path" ]; then
+    create_valid_file "$1"
+  else
+    mkdir --parents "$1"
+    touch "$file_path"
+    echo "$file_path"
+  fi
 }
 
 spec_helper_precheck() {
