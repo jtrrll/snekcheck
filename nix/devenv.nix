@@ -41,11 +41,14 @@
         env-help.enable = true;
 
         languages = {
-          go.enable = true;
+          go = {
+            enable = true;
+            package = self.packages.${system}.snekcheck.go;
+          };
           nix.enable = true;
         };
 
-        pre-commit = {
+        git-hooks = {
           default_stages = ["pre-push"];
           hooks = {
             actionlint.enable = true;
