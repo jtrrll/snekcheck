@@ -83,6 +83,15 @@ func (suite *RunTestSuite) TestRun() {
 				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
 				suite.Nil(main.Run(config))
 			})
+			suite.Run("condenses separators into one underscore", func() {
+				invalidFilename := append(suite.Root, "InVa - LiD")
+				suite.Require().False(main.IsValid(invalidFilename.Base()))
+				_, createErr := suite.Fs.Create(invalidFilename.String())
+				suite.Require().NoError(createErr)
+
+				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
+				suite.Nil(main.Run(config))
+			})
 		})
 	})
 }
