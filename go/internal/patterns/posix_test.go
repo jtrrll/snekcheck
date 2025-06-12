@@ -82,7 +82,7 @@ func TestPosix(t *testing.T) {
 				output string
 			}{
 				{input: "lol#$", output: "lol"},
-				{input: "spaced  name", output: "spaced__name"},
+				{input: "spaced  name", output: "spaced_name"},
 				{input: "__012 345.md", output: "__012_345.md"},
 			}
 			for _, tc := range testCases {

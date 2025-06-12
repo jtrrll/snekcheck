@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   perSystem = {
     pkgs,
     system,
@@ -10,8 +14,8 @@
       libraries = [pkgs.python3.pkgs.typer];
       runtimeInputs = [
         inputs.gomod2nix.legacyPackages.${system}.gomod2nix
-        pkgs.go
         pkgs.nix
+        self.packages.${system}.snekcheck.go
       ];
       script = ''
         from pathlib import Path

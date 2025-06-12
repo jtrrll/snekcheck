@@ -36,16 +36,20 @@
         in {
           inherit PROJECT_ROOT;
           SOURCE_ROOT = "${PROJECT_ROOT}/go";
+          SPEC_ROOT = "${PROJECT_ROOT}/spec";
         };
 
         env-help.enable = true;
 
         languages = {
-          go.enable = true;
+          go = {
+            enable = true;
+            package = self.packages.${system}.snekcheck.go;
+          };
           nix.enable = true;
         };
 
-        pre-commit = {
+        git-hooks = {
           default_stages = ["pre-push"];
           hooks = {
             actionlint.enable = true;

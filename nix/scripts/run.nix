@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   perSystem = {
     pkgs,
     system,
@@ -9,7 +13,7 @@
       name = "run";
       runtimeInputs = [
         inputs.gomod2nix.legacyPackages.${system}.gomod2nix
-        pkgs.go
+        self.packages.${system}.snekcheck.go
       ];
       text = ''
         (cd "$SOURCE_ROOT" && go mod tidy && gomod2nix)
