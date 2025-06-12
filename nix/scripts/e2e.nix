@@ -1,14 +1,19 @@
-{
-  perSystem = {pkgs, ...}: {
+{self, ...}: {
+  perSystem = {
+    pkgs,
+    system,
+    ...
+  }: {
     scripts.e2e = pkgs.writeShellApplication {
       meta.description = "Runs all end-to-end tests.";
       name = "e2e";
       runtimeInputs = [
-        pkgs.shellspec
+        self.packages.${system}.snekcheck.go
       ];
       text = ''
         build
-        shellspec --no-warning-as-failure "$PROJECT_ROOT"
+        cd "$SPEC_ROOT"
+        go test -count 1 ./...
       '';
     };
   };

@@ -39,7 +39,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 			t.Parallel()
 			testCases := []string{
 				"",
-				"__",
+				"_",
 				"SNAKE",
 				"_SNAKE_CASE_",
 				"012_345",
@@ -68,7 +68,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 			t.Parallel()
 			testCases := []string{
 				"",
-				"__",
+				"_",
 				"SNAKE",
 				"SNAKE_CASE_123",
 				"_DO_NOT_CHANGE_THIS_PLEASE_",
@@ -86,7 +86,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 			}{
 				{input: "lol#$", output: "LOL"},
 				{input: "snake Case", output: "SNAKE_CASE"},
-				{input: " SNake   caSE ", output: "_SNAKE___CASE_"},
+				{input: " SNake   caSE ", output: "_SNAKE_CASE_"},
 			}
 			for _, tc := range testCases {
 				require.False(t, patterns.IsScreamingSnakeCase(tc.input))

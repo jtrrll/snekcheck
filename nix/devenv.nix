@@ -36,6 +36,7 @@
         in {
           inherit PROJECT_ROOT;
           SOURCE_ROOT = "${PROJECT_ROOT}/go";
+          SPEC_ROOT = "${PROJECT_ROOT}/spec";
         };
 
         env-help.enable = true;

@@ -1,10 +1,14 @@
-{
-  perSystem = {pkgs, ...}: {
+{self, ...}: {
+  perSystem = {
+    pkgs,
+    system,
+    ...
+  }: {
     scripts.unit = pkgs.writeShellApplication {
       meta.description = "Runs all unit tests.";
       name = "unit";
       runtimeInputs = [
-        pkgs.go
+        self.packages.${system}.snekcheck.go
       ];
       text = ''
         cd "$SOURCE_ROOT"
