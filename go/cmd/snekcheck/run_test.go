@@ -3,13 +3,13 @@ package main_test
 import (
 	"math"
 	"os"
-	main "snekcheck/cmd/snekcheck"
-	"snekcheck/internal/files"
 	"testing"
 
 	"github.com/go-git/go-billy/v5"
 	"github.com/go-git/go-billy/v5/memfs"
 	"github.com/stretchr/testify/suite"
+	main "snekcheck/cmd/snekcheck"
+	"snekcheck/internal/files"
 )
 
 type RunTestSuite struct {
@@ -38,7 +38,13 @@ func (suite *RunTestSuite) TestRun() {
 		})
 		suite.Run("check", func() {
 			suite.Run("succeeds with an empty directory", func() {
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: false, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     false,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 			suite.Run("succeeds with a single valid file", func() {
@@ -47,7 +53,13 @@ func (suite *RunTestSuite) TestRun() {
 				_, createErr := suite.Fs.Create(validFilename.String())
 				suite.Require().NoError(createErr)
 
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: false, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     false,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 			suite.Run("fails with a single invalid file", func() {
@@ -56,13 +68,25 @@ func (suite *RunTestSuite) TestRun() {
 				_, createErr := suite.Fs.Create(invalidFilename.String())
 				suite.Require().NoError(createErr)
 
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: false, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     false,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.NotNil(main.Run(config))
 			})
 		})
 		suite.Run("fix", func() {
 			suite.Run("succeeds with an empty directory", func() {
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     true,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 			suite.Run("succeeds with a single valid file", func() {
@@ -71,7 +95,13 @@ func (suite *RunTestSuite) TestRun() {
 				_, createErr := suite.Fs.Create(validFilename.String())
 				suite.Require().NoError(createErr)
 
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     true,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 			suite.Run("succeeds with a single invalid file", func() {
@@ -80,7 +110,13 @@ func (suite *RunTestSuite) TestRun() {
 				_, createErr := suite.Fs.Create(invalidFilename.String())
 				suite.Require().NoError(createErr)
 
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     true,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 			suite.Run("condenses separators into one underscore", func() {
@@ -89,7 +125,13 @@ func (suite *RunTestSuite) TestRun() {
 				_, createErr := suite.Fs.Create(invalidFilename.String())
 				suite.Require().NoError(createErr)
 
-				config := main.Config{Depth: math.MaxUint, Fs: suite.Fs, Fix: true, Paths: []files.Path{suite.Root}, Verbose: false}
+				config := main.Config{
+					Depth:   math.MaxUint,
+					Fs:      suite.Fs,
+					Fix:     true,
+					Paths:   []files.Path{suite.Root},
+					Verbose: false,
+				}
 				suite.Nil(main.Run(config))
 			})
 		})

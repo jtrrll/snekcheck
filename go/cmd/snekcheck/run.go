@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"slices"
 
+	"github.com/fatih/color"
+	"github.com/go-git/go-billy/v5"
 	"snekcheck/internal/cli"
 	"snekcheck/internal/files"
 	"snekcheck/internal/patterns"
 	"snekcheck/internal/tree"
-
-	"github.com/fatih/color"
-	"github.com/go-git/go-billy/v5"
 )
 
 // A runtime configuration for snekcheck.
@@ -59,6 +58,7 @@ func Run(config Config) cli.Error {
 				fmt.Print(color.GreenString("."))
 			}
 			validPaths = append(validPaths, path)
+
 			return
 		}
 		if !config.Fix {
@@ -68,6 +68,7 @@ func Run(config Config) cli.Error {
 				fmt.Print(color.RedString("."))
 			}
 			invalidPaths = append(invalidPaths, path)
+
 			return
 		}
 		var newPath files.Path
@@ -117,7 +118,11 @@ func Run(config Config) cli.Error {
 		fmt.Print("\n\n")
 	}
 	if config.Fix {
-		fmt.Printf("%s valid filenames, %s filenames changed\n", color.GreenString("%d", len(validPaths)), color.YellowString("%d", len(renamedPaths)))
+		fmt.Printf(
+			"%s valid filenames, %s filenames changed\n",
+			color.GreenString("%d", len(validPaths)),
+			color.YellowString("%d", len(renamedPaths)),
+		)
 	} else {
 		fmt.Printf("%s valid filenames, %s invalid filenames\n", color.GreenString("%d", len(validPaths)), color.RedString("%d", len(invalidPaths)))
 	}
@@ -126,11 +131,17 @@ func Run(config Config) cli.Error {
 	if len(invalidPaths) != 0 {
 		return errInvalidFileNames
 	}
+
 	return nil
 }
 
 // Recursively adds matching child paths to a file tree, up to a maximum depth.
-func addPathWithChildren(fileTree tree.UniqueNode[string], fs billy.Filesystem, path files.Path, maxDepth uint) error {
+func addPathWithChildren(
+	fileTree tree.UniqueNode[string],
+	fs billy.Filesystem,
+	path files.Path,
+	maxDepth uint,
+) error {
 	if fileTree == nil {
 		panic("invalid file tree")
 	}
@@ -172,6 +183,7 @@ func addPathWithChildren(fileTree tree.UniqueNode[string], fs billy.Filesystem, 
 				return err
 			}
 		}
+
 		return nil
 	}
 
@@ -184,6 +196,7 @@ func parseGitIgnorePatterns(fs billy.Filesystem, path files.Path) files.GitIgnor
 	if ignoreErr != nil {
 		patterns = nil
 	}
+
 	return patterns
 }
 
@@ -195,5 +208,6 @@ func loadGlobalGitIgnore(fs billy.Filesystem) files.GitIgnore {
 		fmt.Printf("WARN %s", ignoreErr)
 		globalIgnorePatterns = nil
 	}
+
 	return globalIgnorePatterns
 }

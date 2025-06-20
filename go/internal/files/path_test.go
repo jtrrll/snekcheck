@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"snekcheck/internal/files"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"snekcheck/internal/files"
 )
 
 func TestPath(t *testing.T) {

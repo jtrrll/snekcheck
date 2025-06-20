@@ -22,8 +22,7 @@ func IsScreamingSnakeCase(s string) bool {
 // Attempts to convert a string to valid SCREAMING_SNAKE_CASE.
 func ToScreamingSnakeCase(s string) string {
 	s = separators.ReplaceAllLiteralString(s, "_")
-	s = lowers.ReplaceAllStringFunc(s, func(match string) string {
-		return strings.ToUpper(match)
-	})
+	s = lowers.ReplaceAllStringFunc(s, strings.ToUpper)
+
 	return invalidScreamingSnakeCaseCharacters.ReplaceAllLiteralString(s, "")
 }

@@ -3,11 +3,11 @@ package e2e_test
 import (
 	"os"
 	"path/filepath"
-	e2e "snekcheck-e2e"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	e2e "snekcheck-e2e"
 )
 
 func TestFix(t *testing.T) {

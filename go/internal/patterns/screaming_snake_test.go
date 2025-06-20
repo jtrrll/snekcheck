@@ -1,11 +1,11 @@
 package patterns_test
 
 import (
-	"snekcheck/internal/patterns"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"snekcheck/internal/patterns"
 )
 
 func BenchmarkScreamingSnakeCase(b *testing.B) {
@@ -78,23 +78,26 @@ func TestScreamingSnakeCase(t *testing.T) {
 				assert.Equal(t, input, patterns.ToScreamingSnakeCase(input))
 			}
 		})
-		t.Run("converts invalid screaming snake case to valid screaming snake case", func(t *testing.T) {
-			t.Parallel()
-			testCases := []struct {
-				input  string
-				output string
-			}{
-				{input: "lol#$", output: "LOL"},
-				{input: "snake Case", output: "SNAKE_CASE"},
-				{input: " SNake   caSE ", output: "_SNAKE_CASE_"},
-			}
-			for _, tc := range testCases {
-				require.False(t, patterns.IsScreamingSnakeCase(tc.input))
-				require.True(t, patterns.IsScreamingSnakeCase(tc.output))
-				actual := patterns.ToScreamingSnakeCase(tc.input)
-				assert.Equal(t, tc.output, actual)
-				assert.True(t, patterns.IsScreamingSnakeCase(actual))
-			}
-		})
+		t.Run(
+			"converts invalid screaming snake case to valid screaming snake case",
+			func(t *testing.T) {
+				t.Parallel()
+				testCases := []struct {
+					input  string
+					output string
+				}{
+					{input: "lol#$", output: "LOL"},
+					{input: "snake Case", output: "SNAKE_CASE"},
+					{input: " SNake   caSE ", output: "_SNAKE_CASE_"},
+				}
+				for _, tc := range testCases {
+					require.False(t, patterns.IsScreamingSnakeCase(tc.input))
+					require.True(t, patterns.IsScreamingSnakeCase(tc.output))
+					actual := patterns.ToScreamingSnakeCase(tc.input)
+					assert.Equal(t, tc.output, actual)
+					assert.True(t, patterns.IsScreamingSnakeCase(actual))
+				}
+			},
+		)
 	})
 }

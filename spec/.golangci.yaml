@@ -1,9 +1,23 @@
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - golines
 linters:
   default: all
+  disable:
+    - depguard
+    - errorlint
+    - exhaustruct
+    - gochecknoglobals
+    - gosec
+    - mnd
+    - paralleltest
+    - revive
+    - wsl
   settings:
     errcheck:
       check-type-assertions: true
     govet:
       enable-all: true
-
 version: "2"

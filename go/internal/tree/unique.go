@@ -22,6 +22,7 @@ func (tree UniqueNode[T]) AddPath(path []T) UniqueNode[T] {
 		}
 		node = node[part]
 	}
+
 	return node
 }
 
@@ -34,6 +35,7 @@ func (tree UniqueNode[T]) FindByPath(path []T) UniqueNode[T] {
 		}
 		node = node[part]
 	}
+
 	return node
 }
 

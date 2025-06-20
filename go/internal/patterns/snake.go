@@ -22,8 +22,7 @@ func IsSnakeCase(s string) bool {
 // Attempts to convert a string to valid snake_case.
 func ToSnakeCase(s string) string {
 	s = separators.ReplaceAllLiteralString(s, "_")
-	s = uppers.ReplaceAllStringFunc(s, func(match string) string {
-		return strings.ToLower(match)
-	})
+	s = uppers.ReplaceAllStringFunc(s, strings.ToLower)
+
 	return invalidSnakeCaseCharacters.ReplaceAllLiteralString(s, "")
 }
