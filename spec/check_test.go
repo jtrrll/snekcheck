@@ -2,10 +2,10 @@ package e2e_test
 
 import (
 	"os"
-	e2e "snekcheck-e2e"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	e2e "snekcheck-e2e"
 )
 
 func TestCheck(t *testing.T) {

@@ -26,5 +26,6 @@ func IsPosixFileName(s string) bool {
 func ToPosixFileName(s string) string {
 	s = spaces.ReplaceAllLiteralString(s, "_")
 	s = invalidPosixFileNameCharacters.ReplaceAllLiteralString(s, "")
+
 	return s[:min(len(s), 255)]
 }

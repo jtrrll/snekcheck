@@ -3,10 +3,10 @@ package main_test
 import (
 	"errors"
 	"fmt"
-	main "snekcheck/cmd/snekcheck"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	main "snekcheck/cmd/snekcheck"
 )
 
 func TestError(t *testing.T) {
@@ -44,7 +44,11 @@ func TestError(t *testing.T) {
 			}
 			for _, input := range testCases {
 				baseError := main.Error{Message: input}
-				assert.Equal(t, baseError, errors.Unwrap(fmt.Errorf("wrapped error: %w", baseError)))
+				assert.Equal(
+					t,
+					baseError,
+					errors.Unwrap(fmt.Errorf("wrapped error: %w", baseError)),
+				)
 			}
 		})
 	})

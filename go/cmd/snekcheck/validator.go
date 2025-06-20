@@ -1,8 +1,9 @@
 package main
 
 import (
-	"snekcheck/internal/patterns"
 	"strings"
+
+	"snekcheck/internal/patterns"
 )
 
 // Determines if a filename is valid according to snekcheck's opinion.
@@ -18,5 +19,6 @@ func isAlmostScreamingSnakeCase(name string) bool {
 	if lastIndex == -1 {
 		return patterns.IsScreamingSnakeCase(name)
 	}
+
 	return patterns.IsScreamingSnakeCase(name[:lastIndex]) && patterns.IsSnakeCase(name[lastIndex:])
 }

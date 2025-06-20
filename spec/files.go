@@ -48,5 +48,6 @@ func ValidChars(length uint) string {
 	for i := range buf {
 		buf[i] = validChars[rand.Intn(len(validChars))]
 	}
+
 	return string(buf)
 }

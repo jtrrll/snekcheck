@@ -19,10 +19,9 @@ func (gi GitIgnore) Match(path Path, isDir bool) bool {
 	return gitignore.NewMatcher(gi).Match(path, isDir)
 }
 
-var basePatterns = []gitignore.Pattern{gitignore.ParsePattern(".git/", nil)}
-
 // Parses the list of global gitignore patterns.
 func GlobalGitIgnorePatterns(fs billy.Filesystem) ([]gitignore.Pattern, error) {
+	basePatterns := []gitignore.Pattern{gitignore.ParsePattern(".git/", nil)}
 	systemPatterns, systemErr := gitignore.LoadSystemPatterns(fs)
 	userPatterns, userErr := gitignore.LoadGlobalPatterns(fs)
 
@@ -30,6 +29,7 @@ func GlobalGitIgnorePatterns(fs billy.Filesystem) ([]gitignore.Pattern, error) {
 	if allErr != nil {
 		return nil, fmt.Errorf("failed to load gitignore patterns: %w", allErr)
 	}
+
 	return slices.Concat(basePatterns, systemPatterns, userPatterns), nil
 }
 
@@ -55,7 +55,11 @@ func parseGitIgnoreFile(fs billy.Filesystem, path Path) ([]gitignore.Pattern, er
 		return nil, openErr
 	}
 
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			panic(err)
+		}
+	}()
 	var patterns []gitignore.Pattern
 
 	scanner := bufio.NewScanner(f)
