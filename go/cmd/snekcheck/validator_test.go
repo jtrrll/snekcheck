@@ -3,8 +3,9 @@ package main_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	main "snekcheck/cmd/snekcheck"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsValid(t *testing.T) {

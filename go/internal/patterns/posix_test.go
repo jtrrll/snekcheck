@@ -3,9 +3,10 @@ package patterns_test
 import (
 	"testing"
 
+	"snekcheck/internal/patterns"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"snekcheck/internal/patterns"
 )
 
 func BenchmarkPosix(b *testing.B) {

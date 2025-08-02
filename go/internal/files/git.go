@@ -11,15 +11,15 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/format/gitignore"
 )
 
-// A list of gitignore patterns in order of increasing priority.
+// GitIgnore is a list of gitignore patterns in order of increasing priority.
 type GitIgnore []gitignore.Pattern
 
-// Determines if a file path is ignored by Git.
+// Match determines if a file path is ignored by Git.
 func (gi GitIgnore) Match(path Path, isDir bool) bool {
 	return gitignore.NewMatcher(gi).Match(path, isDir)
 }
 
-// Parses the list of global gitignore patterns.
+// GlobalGitIgnorePatterns parses the list of global gitignore patterns.
 func GlobalGitIgnorePatterns(fs billy.Filesystem) ([]gitignore.Pattern, error) {
 	basePatterns := []gitignore.Pattern{gitignore.ParsePattern(".git/", nil)}
 	systemPatterns, systemErr := gitignore.LoadSystemPatterns(fs)
@@ -33,7 +33,7 @@ func GlobalGitIgnorePatterns(fs billy.Filesystem) ([]gitignore.Pattern, error) {
 	return slices.Concat(basePatterns, systemPatterns, userPatterns), nil
 }
 
-// Parses the .git/info/exclude patterns in a directory.
+// ParseGitIgnore parses the .git/info/exclude patterns in a directory.
 func ParseGitIgnore(fs billy.Filesystem, path Path) ([]gitignore.Pattern, error) {
 	ignorePatterns, parseErr := parseGitIgnoreFile(fs, append(path, ".gitignore"))
 	if parseErr != nil {

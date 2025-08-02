@@ -5,11 +5,12 @@ import (
 	"os"
 	"testing"
 
+	main "snekcheck/cmd/snekcheck"
+	"snekcheck/internal/files"
+
 	"github.com/go-git/go-billy/v5"
 	"github.com/go-git/go-billy/v5/memfs"
 	"github.com/stretchr/testify/suite"
-	main "snekcheck/cmd/snekcheck"
-	"snekcheck/internal/files"
 )
 
 type RunTestSuite struct {

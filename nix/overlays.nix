@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.overlay = _: prev: {
+  flake.overlays.default = _: prev: {
     writePythonApplication = {
       description,
       libraries ? [],
@@ -59,7 +59,7 @@
   perSystem = {system, ...}: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
-      overlays = [self.overlay];
+      overlays = [self.overlays.default];
     };
   };
 }

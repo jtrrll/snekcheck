@@ -1,11 +1,12 @@
 package patterns_test
 
 import (
+	"snekcheck/internal/patterns"
+
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"snekcheck/internal/patterns"
 )
 
 func BenchmarkSnakeCase(b *testing.B) {

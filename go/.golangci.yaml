@@ -1,7 +1,7 @@
 formatters:
   enable:
-    - gci
     - gofmt
+    - goimports
     - golines
 linters:
   default: all
@@ -19,7 +19,6 @@ linters:
     - lll
     - mnd
     - paralleltest
-    - revive
     - varnamelen
     - wrapcheck
     - wsl

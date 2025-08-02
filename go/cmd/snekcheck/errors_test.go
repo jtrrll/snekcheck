@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	main "snekcheck/cmd/snekcheck"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestError(t *testing.T) {

@@ -7,18 +7,18 @@ var (
 	errFailedToBuildFileTree = Error{Code: 3, Message: "failed to build file tree"}
 )
 
-// A command-line error.
+// Error is a command-line error.
 type Error struct {
 	Message string
 	Code    uint8
 }
 
-// Returns the error's status code.
+// ExitCode returns the error's status code.
 func (err Error) ExitCode() uint8 {
 	return err.Code
 }
 
-// Returns the error's message.
+// Error returns the error's message.
 func (err Error) Error() string {
 	return err.Message
 }

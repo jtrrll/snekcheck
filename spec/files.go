@@ -36,7 +36,7 @@ func ResetTestDir() {
 	if err := os.RemoveAll(TestDir); err != nil {
 		panic(err)
 	}
-	if err := os.MkdirAll(TestDir, 0777); err != nil {
+	if err := os.MkdirAll(TestDir, os.ModePerm); err != nil {
 		panic(err)
 	}
 }

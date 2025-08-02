@@ -13,10 +13,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/go-git/go-billy/v5/osfs"
-	"github.com/spf13/pflag"
 	"snekcheck/internal/cli"
 	"snekcheck/internal/files"
+
+	"github.com/go-git/go-billy/v5/osfs"
+	"github.com/spf13/pflag"
 )
 
 // The snekcheck CLI builds a runtime configuration for the core process.

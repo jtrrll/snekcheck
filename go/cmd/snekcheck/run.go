@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/fatih/color"
-	"github.com/go-git/go-billy/v5"
 	"snekcheck/internal/cli"
 	"snekcheck/internal/files"
 	"snekcheck/internal/patterns"
 	"snekcheck/internal/tree"
+
+	"github.com/fatih/color"
+	"github.com/go-git/go-billy/v5"
 )
 
-// A runtime configuration for snekcheck.
+// Config is a runtime configuration for snekcheck.
 type Config struct {
 	Fs      billy.Filesystem
 	Paths   []files.Path
@@ -21,7 +22,7 @@ type Config struct {
 	Verbose bool
 }
 
-// The core snekcheck process.
+// Run is the core snekcheck process.
 func Run(config Config) cli.Error {
 	if config.Fs == nil {
 		panic("invalid filesystem")

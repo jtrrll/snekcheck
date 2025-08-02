@@ -3,6 +3,7 @@ package e2e
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -26,7 +27,8 @@ func RunExecutable(args ...string) (int, string, string) {
 	stderr := stderrBuf.String()
 
 	if err != nil {
-		if exitErr, ok := err.(*exec.ExitError); ok {
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) {
 			return exitErr.ExitCode(), stdout, stderr
 		}
 		panic(fmt.Errorf("failed to run %s: %w", binaryPath, err))

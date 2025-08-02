@@ -6,7 +6,7 @@ import (
 	"snekcheck/internal/patterns"
 )
 
-// Determines if a filename is valid according to snekcheck's opinion.
+// IsValid determines if a filename is valid according to snekcheck's opinion.
 func IsValid(name string) bool {
 	return len(name) > 0 &&
 		patterns.IsPosixFileName(name) &&

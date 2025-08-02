@@ -3,8 +3,9 @@ package e2e_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	e2e "snekcheck-e2e"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHelp(t *testing.T) {
