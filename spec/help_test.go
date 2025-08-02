@@ -3,7 +3,7 @@ package e2e_test
 import (
 	"testing"
 
-	e2e "snekcheck-e2e"
+	e2e "github.com/jtrrll/snekcheck-e2e"
 
 	"github.com/stretchr/testify/assert"
 )

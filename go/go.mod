@@ -1,6 +1,6 @@
 module github.com/jtrrll/snekcheck
 
-go 1.24.3
+go 1.24.5
 
 require (
 	github.com/fatih/color v1.18.0
