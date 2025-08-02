@@ -1,6 +1,5 @@
 {
   go,
-  gomod2nix,
   python3,
   writePythonApplication,
 }:
@@ -10,7 +9,6 @@ writePythonApplication {
   libraries = [python3.pkgs.typer];
   runtimeInputs = [
     go
-    gomod2nix
   ];
   script = ''
     from pathlib import Path
@@ -72,7 +70,6 @@ writePythonApplication {
 
         print("Rebuilding...")
         subprocess.run(["go", "mod", "tidy"], cwd=SOURCE_ROOT, check=True)
-        subprocess.run(["gomod2nix"], cwd=SOURCE_ROOT, check=True)
         subprocess.run(["nix", "build", f"{PROJECT_ROOT}"], check=True)
       else:
         print("Build is up to date.")

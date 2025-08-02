@@ -26,7 +26,6 @@
       };
       build = pkgs.callPackage ./build.nix {
         inherit (self.packages.${system}.default) go;
-        inherit (inputs.gomod2nix.legacyPackages.${system}) gomod2nix;
       };
       demo = pkgs.callPackage ./demo.nix {
         snekcheck = self.packages.${system}.default;
@@ -40,7 +39,6 @@
       };
       run = pkgs.callPackage ./run.nix {
         inherit (self.packages.${system}.default) go;
-        inherit (inputs.gomod2nix.legacyPackages.${system}) gomod2nix;
       };
       splash = pkgs.callPackage ./splash.nix {};
       unit = pkgs.callPackage ./unit.nix {

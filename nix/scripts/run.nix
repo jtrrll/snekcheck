@@ -1,17 +1,13 @@
 {
   go,
-  gomod2nix,
   writeShellApplication,
 }:
 writeShellApplication {
   meta.description = "Runs the project.";
   name = "run";
-  runtimeInputs = [
-    go
-    gomod2nix
-  ];
+  runtimeInputs = [go];
   text = ''
-    (cd "$SOURCE_ROOT" && go mod tidy && gomod2nix)
+    (cd "$SOURCE_ROOT" && go mod tidy)
     nix run "$PROJECT_ROOT" -- "$@"
   '';
 }

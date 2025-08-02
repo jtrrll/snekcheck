@@ -1,17 +1,16 @@
 {
-  buildGoApplication,
-  go,
+  buildGoModule,
   lib,
 }:
-buildGoApplication {
-  inherit go;
+buildGoModule {
   meta = {
     description = "An opinionated filename linter that loves snake case.";
     homepage = "https://github.com/jtrrll/snekcheck";
     license = lib.licenses.mit;
   };
-  modules = ../../go/gomod2nix.toml;
+  modRoot = "./go";
   pname = "snekcheck";
-  src = ../../go;
+  src = ../..;
+  vendorHash = "sha256-zsMzeDcba92K80iRxvV1YNW1olWjSoC9jNyzfy7t2jI=";
   version = "0.1.0";
 }
