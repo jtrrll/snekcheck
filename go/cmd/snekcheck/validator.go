@@ -3,7 +3,7 @@ package main
 import (
 	"strings"
 
-	"snekcheck/internal/patterns"
+	"github.com/jtrrll/snekcheck/internal/patterns"
 )
 
 // IsValid determines if a filename is valid according to snekcheck's opinion.

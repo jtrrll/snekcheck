@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"snekcheck/internal/files"
+	"github.com/jtrrll/snekcheck/internal/files"
 
 	"github.com/stretchr/testify/assert"
 )

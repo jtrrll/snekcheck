@@ -13,8 +13,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"snekcheck/internal/cli"
-	"snekcheck/internal/files"
+	"github.com/jtrrll/snekcheck/internal/cli"
+	"github.com/jtrrll/snekcheck/internal/files"
 
 	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/spf13/pflag"

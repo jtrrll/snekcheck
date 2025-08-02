@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	main "snekcheck/cmd/snekcheck"
-	"snekcheck/internal/files"
+	main "github.com/jtrrll/snekcheck/cmd/snekcheck"
+	"github.com/jtrrll/snekcheck/internal/files"
 
 	"github.com/go-git/go-billy/v5"
 	"github.com/go-git/go-billy/v5/memfs"

@@ -3,7 +3,7 @@ package patterns_test
 import (
 	"testing"
 
-	"snekcheck/internal/patterns"
+	"github.com/jtrrll/snekcheck/internal/patterns"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

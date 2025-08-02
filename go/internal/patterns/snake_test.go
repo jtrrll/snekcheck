@@ -1,7 +1,7 @@
 package patterns_test
 
 import (
-	"snekcheck/internal/patterns"
+	"github.com/jtrrll/snekcheck/internal/patterns"
 
 	"testing"
 

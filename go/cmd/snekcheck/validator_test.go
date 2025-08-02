@@ -3,7 +3,7 @@ package main_test
 import (
 	"testing"
 
-	main "snekcheck/cmd/snekcheck"
+	main "github.com/jtrrll/snekcheck/cmd/snekcheck"
 
 	"github.com/stretchr/testify/assert"
 )

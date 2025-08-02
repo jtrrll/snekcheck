@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"slices"
 
-	"snekcheck/internal/cli"
-	"snekcheck/internal/files"
-	"snekcheck/internal/patterns"
-	"snekcheck/internal/tree"
+	"github.com/jtrrll/snekcheck/internal/cli"
+	"github.com/jtrrll/snekcheck/internal/files"
+	"github.com/jtrrll/snekcheck/internal/patterns"
+	"github.com/jtrrll/snekcheck/internal/tree"
 
 	"github.com/fatih/color"
 	"github.com/go-git/go-billy/v5"

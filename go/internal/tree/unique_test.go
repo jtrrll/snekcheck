@@ -3,7 +3,7 @@ package tree_test
 import (
 	"testing"
 
-	"snekcheck/internal/tree"
+	"github.com/jtrrll/snekcheck/internal/tree"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
