@@ -24,9 +24,6 @@
       bench = pkgs.callPackage ./bench.nix {
         inherit (self.packages.${system}.default) go;
       };
-      build = pkgs.callPackage ./build.nix {
-        inherit (self.packages.${system}.default) go;
-      };
       demo = pkgs.callPackage ./demo.nix {
         snekcheck = self.packages.${system}.default;
       };

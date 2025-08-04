@@ -7,7 +7,6 @@ writeShellApplication {
   name = "e2e";
   runtimeInputs = [go];
   text = ''
-    build
     cd "$SPEC_ROOT"
     go test -count 1 ./...
   '';

@@ -9,7 +9,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"path/filepath"
 
@@ -39,12 +38,6 @@ func main() {
 			flagSet.FlagUsages(),
 		)
 	}
-	depth := flagSet.UintP(
-		"depth",
-		"d",
-		math.MaxUint8,
-		"The number of levels to descend into a directory",
-	)
 	fix := flagSet.BoolP("fix", "f", false, "Whether to correct invalid filenames")
 	help := flagSet.BoolP("help", "h", false, "Print usage help")
 	verbose := flagSet.BoolP("verbose", "v", false, "Whether to print filenames")
@@ -69,7 +62,6 @@ func main() {
 	err := Run(Config{
 		Fs:      rootFs,
 		Paths:   absPaths,
-		Depth:   *depth,
 		Fix:     *fix,
 		Verbose: *verbose,
 	})

@@ -2,9 +2,8 @@ package main
 
 // Common errors.
 var (
-	errInvalidFileNames      = Error{Code: 1, Message: "invalid filenames found"}
-	errNoPathsProvided       = Error{Code: 2, Message: "no paths provided"}
-	errFailedToBuildFileTree = Error{Code: 3, Message: "failed to build file tree"}
+	errInvalidFileNames = Error{Code: 1, Message: "invalid filenames found"}
+	errNoPathsProvided  = Error{Code: 2, Message: "no paths provided"}
 )
 
 // Error is a command-line error.

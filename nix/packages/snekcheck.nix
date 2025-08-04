@@ -11,6 +11,6 @@ buildGoModule {
   modRoot = "./go";
   pname = "snekcheck";
   src = ../..;
-  vendorHash = "sha256-zsMzeDcba92K80iRxvV1YNW1olWjSoC9jNyzfy7t2jI=";
+  vendorHash = "sha256-uVjfU3XRqqLj9RwP/eyi+zsi1qYQvWmyCX93SONR3yw=";
   version = "0.1.0";
 }

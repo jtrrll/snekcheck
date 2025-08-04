@@ -12,31 +12,35 @@ An opinionated filename linter that loves snake case.
 
 ## Usage
 
+`snekcheck` accepts a list of filenames to lint.
+
+- To lint a filename, simply pass it to `snekcheck`.
+
+   <!-- markdownlint-disable MD013 -->
+   ```sh
+   snekcheck <filename>
+   ```
+   <!-- markdownlint-enable MD013 -->
+
 - To lint several filenames, provide them in a list.
 
    <!-- markdownlint-disable MD013 -->
    ```sh
-   snekcheck <filename> <filename> ...
+   snekcheck <filename> <filename> <dirname> ...
    ```
    <!-- markdownlint-enable MD013 -->
 
-- To lint an entire directory, or several, directory names can be provided instead.
+- To recursively lint directories and apply filters, use tools like `find` to provide arguments to `snekcheck`.
 
    <!-- markdownlint-disable MD013 -->
    ```sh
-   snekcheck <dirname> <dirname> ...
-   ```
-   <!-- markdownlint-enable MD013 -->
-
-- Several filenames and directory names can be provided simultaneously.
-
-   <!-- markdownlint-disable MD013 -->
-   ```sh
-   snekcheck <filename> <dirname> ...
+   find . -exec snekcheck {} +
    ```
    <!-- markdownlint-enable MD013 -->
 
 ### Flags
+
+`snekcheck`'s behavior can be modified with various flags.
 
 - To print a help message, specify the `--help` flag.
 
@@ -47,21 +51,11 @@ An opinionated filename linter that loves snake case.
    <!-- markdownlint-enable MD013 -->
 
 - To automatically rename invalid filenames, specify the `--fix` flag.
-Be careful, as the renaming strategy may not produce the results you want.
+*Be careful*, as the renaming strategy may not produce the results you want.
 
    <!-- markdownlint-disable MD013 -->
    ```sh
    snekcheck --fix <filename> ...
-   ```
-   <!-- markdownlint-enable MD013 -->
-
-- To limit directory traversal, specify the `--depth` flag and a depth limit.
-This can be useful for only checking top-level names or
-for improving performance on large file systems.
-
-   <!-- markdownlint-disable MD013 -->
-   ```sh
-   snekcheck --depth 1 <dirname> ...
    ```
    <!-- markdownlint-enable MD013 -->
 
@@ -76,12 +70,11 @@ for improving performance on large file systems.
 ## Build From Source
 
 1. Install [Nix](https://zero-to-nix.com/start/install/)
-2. Clone this repository
-3. Run the following command:
+2. Run the build command:
 
    <!-- markdownlint-disable MD013 -->
    ```sh
-   nix develop --impure -c build
+   nix build github:jtrrll/snekcheck
    ```
    <!-- markdownlint-enable MD013 -->
 

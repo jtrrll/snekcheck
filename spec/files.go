@@ -6,25 +6,19 @@ import (
 	"path/filepath"
 )
 
-type File struct {
-	Name     string
-	Children []File
+func CreateFile(path string, name string) string {
+	path = filepath.Join(path, name)
+	if _, err := os.Create(path); err != nil {
+		panic(err)
+	}
+
+	return path
 }
 
-func CreateFile(path string, file File) string {
-	path = filepath.Join(path, file.Name)
-
-	if len(file.Children) > 0 {
-		if err := os.Mkdir(path, os.ModeDir); err != nil {
-			panic(err)
-		}
-		for _, child := range file.Children {
-			CreateFile(path, child)
-		}
-	} else {
-		if _, err := os.Create(path); err != nil {
-			panic(err)
-		}
+func CreateDirectory(path string, name string) string {
+	path = filepath.Join(path, name)
+	if err := os.Mkdir(path, os.ModePerm); err != nil {
+		panic(err)
 	}
 
 	return path
@@ -41,7 +35,7 @@ func ResetTestDir() {
 	}
 }
 
-const validChars string = "abcdefghijklmnopqrstuvwxyz0123456789_"
+const validChars string = "abcdefghijklmnopqrstuvwxyz0123456789"
 
 func ValidChars(length uint) string {
 	buf := make([]byte, length)

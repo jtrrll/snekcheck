@@ -15,6 +15,7 @@
   }: {
     devenv = {
       shells.default = {
+        containers = lib.mkForce {}; # Workaround to remove containers from flake checks.
         enterShell = "${pkgs.writeShellApplication {
           name = "splashScreen";
           runtimeInputs = [

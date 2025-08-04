@@ -27,7 +27,7 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - name: Build
-        run: nix develop --impure -c build
+        run: nix build
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
       - name: Unit Test
         run: nix develop --impure -c unit
       - name: End-to-end Test
-        run: nix develop --impure -c e2e
+        run: nix build && nix develop --impure -c e2e
 ...

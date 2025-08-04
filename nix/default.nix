@@ -5,7 +5,6 @@
 
     ./checks.nix
     ./devenv.nix
-    ./overlays.nix
   ];
   perSystem = {pkgs, ...}: {
     formatter = pkgs.alejandra;
