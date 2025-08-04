@@ -25,6 +25,7 @@ func Exit(err Error) {
 	if code == 0 {
 		os.Exit(0)
 	}
+
 	if code > 125 {
 		panic("invalid exit code")
 	}

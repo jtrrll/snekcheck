@@ -30,7 +30,8 @@ An opinionated filename linter that loves snake case.
    ```
    <!-- markdownlint-enable MD013 -->
 
-- To recursively lint directories and apply filters, use tools like `find` to provide arguments to `snekcheck`.
+- To recursively lint directories and apply filters,
+use tools like `find` to provide arguments to `snekcheck`.
 
    <!-- markdownlint-disable MD013 -->
    ```sh
@@ -78,4 +79,4 @@ An opinionated filename linter that loves snake case.
    ```
    <!-- markdownlint-enable MD013 -->
 
-4. Find the `snekcheck` binary at `result/bin/snekcheck`
+3. Find the `snekcheck` binary at `result/bin/snekcheck`

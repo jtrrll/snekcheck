@@ -3,6 +3,7 @@ package e2e
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -17,7 +18,7 @@ func RunExecutable(args ...string) (int, string, string) {
 
 	var stdoutBuf, stderrBuf bytes.Buffer
 
-	cmd := exec.Command(binaryPath, args...)
+	cmd := exec.CommandContext(context.Background(), binaryPath, args...)
 	cmd.Stdout = &stdoutBuf
 	cmd.Stderr = &stderrBuf
 
@@ -31,6 +32,7 @@ func RunExecutable(args ...string) (int, string, string) {
 		if errors.As(err, &exitErr) {
 			return exitErr.ExitCode(), stdout, stderr
 		}
+
 		panic(fmt.Errorf("failed to run %s: %w", binaryPath, err))
 	}
 

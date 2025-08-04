@@ -1,10 +1,10 @@
 {inputs, ...}: {
   imports = [
-    ./packages
     ./scripts
 
     ./checks.nix
     ./devenv.nix
+    ./packages.nix
   ];
   perSystem = {pkgs, ...}: {
     formatter = pkgs.alejandra;

@@ -25,6 +25,7 @@ func Run(config Config) cli.Error {
 	if config.Fs == nil {
 		panic("invalid filesystem")
 	}
+
 	if len(config.Paths) == 0 {
 		return errNoPathsProvided
 	}
@@ -45,30 +46,37 @@ func Run(config Config) cli.Error {
 			} else {
 				fmt.Print(color.GreenString("."))
 			}
+
 			validPaths = append(validPaths, path)
 
 			return
 		}
+
 		if !config.Fix {
 			if config.Verbose {
 				color.Red("%s\n", path)
 			} else {
 				fmt.Print(color.RedString("."))
 			}
+
 			invalidPaths = append(invalidPaths, path)
 
 			return
 		}
+
 		var newPath files.Path
+
 		newPath = append(append(newPath, path.Parent()...), patterns.ToSnakeCase(path.Base()))
 		if config.Fs.Rename(path.String(), newPath.String()) != nil {
 			panic(fmt.Errorf("unable to rename %s to %s", path.String(), newPath.String()))
 		}
+
 		if config.Verbose {
 			color.Yellow("%s -> %s\n", path, newPath)
 		} else {
 			fmt.Print(color.YellowString("C"))
 		}
+
 		renamedPaths = append(renamedPaths, struct {
 			old files.Path
 			new files.Path
@@ -79,10 +87,12 @@ func Run(config Config) cli.Error {
 	slices.SortFunc(config.Paths, func(a, b files.Path) int {
 		return len(b) - len(a)
 	})
+
 	for _, path := range config.Paths {
 		if path == nil {
 			panic("invalid path")
 		}
+
 		process(path)
 	}
 
@@ -92,6 +102,7 @@ func Run(config Config) cli.Error {
 	} else {
 		fmt.Print("\n\n")
 	}
+
 	if config.Fix {
 		fmt.Printf(
 			"%s valid filenames, %s filenames changed\n",

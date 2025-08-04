@@ -14,6 +14,7 @@ import (
 
 type RunTestSuite struct {
 	suite.Suite
+
 	Fs   billy.Filesystem
 	Root files.Path
 }

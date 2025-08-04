@@ -8,7 +8,9 @@ import (
 
 func CreateFile(path string, name string) string {
 	path = filepath.Join(path, name)
-	if _, err := os.Create(path); err != nil {
+
+	_, err := os.Create(path)
+	if err != nil {
 		panic(err)
 	}
 
@@ -17,7 +19,9 @@ func CreateFile(path string, name string) string {
 
 func CreateDirectory(path string, name string) string {
 	path = filepath.Join(path, name)
-	if err := os.Mkdir(path, os.ModePerm); err != nil {
+
+	err := os.Mkdir(path, os.ModePerm)
+	if err != nil {
 		panic(err)
 	}
 
@@ -27,10 +31,13 @@ func CreateDirectory(path string, name string) string {
 var TestDir string = filepath.Join(os.TempDir(), "snekcheck_e2e")
 
 func ResetTestDir() {
-	if err := os.RemoveAll(TestDir); err != nil {
+	err := os.RemoveAll(TestDir)
+	if err != nil {
 		panic(err)
 	}
-	if err := os.MkdirAll(TestDir, os.ModePerm); err != nil {
+
+	err = os.MkdirAll(TestDir, os.ModePerm)
+	if err != nil {
 		panic(err)
 	}
 }

@@ -23,7 +23,7 @@ func (p Path) Base() string {
 	return p[len(p)-1]
 }
 
-// Returns the every element of the path except the last. Will panic if the path is empty.
+// Parent returns the every element of the path except the last. Will panic if the path is empty.
 func (p Path) Parent() Path {
 	return p[:len(p)-1]
 }

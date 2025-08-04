@@ -26,6 +26,7 @@ func FuzzScreamingSnakeCase(f *testing.F) {
 	f.Fuzz(func(t *testing.T, input string) {
 		output := patterns.ToScreamingSnakeCase(input)
 		assert.True(t, patterns.IsScreamingSnakeCase(output))
+
 		if patterns.IsScreamingSnakeCase(input) {
 			assert.Equal(t, input, output)
 		}
@@ -38,6 +39,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 		t.Parallel()
 		t.Run("identifies valid screaming snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"",
 				"_",
@@ -52,6 +54,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 		})
 		t.Run("identifies invalid screaming snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"Snake",
 				"snake case 123",
@@ -67,6 +70,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 		t.Parallel()
 		t.Run("does not change valid screaming snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"",
 				"_",
@@ -83,6 +87,7 @@ func TestScreamingSnakeCase(t *testing.T) {
 			"converts invalid screaming snake case to valid screaming snake case",
 			func(t *testing.T) {
 				t.Parallel()
+
 				testCases := []struct {
 					input  string
 					output string

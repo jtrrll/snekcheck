@@ -17,12 +17,12 @@ var (
 	validPosixFileName = regexp.MustCompile(`^[a-zA-Z0-9._][a-zA-Z0-9._\-]{0,254}$`)
 )
 
-// Determines if a string is a valid POSIX filename.
+// IsPosixFileName determines if a string is a valid POSIX filename.
 func IsPosixFileName(s string) bool {
 	return validPosixFileName.MatchString(s)
 }
 
-// Attempts to convert a string to a valid POSIX filename.
+// ToPosixFileName attempts to convert a string to a valid POSIX filename.
 func ToPosixFileName(s string) string {
 	s = spaces.ReplaceAllLiteralString(s, "_")
 	s = invalidPosixFileNameCharacters.ReplaceAllLiteralString(s, "")

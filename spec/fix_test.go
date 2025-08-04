@@ -54,16 +54,17 @@ func TestFix(t *testing.T) {
 		assert.FileExists(t, filepath.Join(e2e.TestDir, "01_song.mp3"))
 	})
 
-	t.Run("it renames a non-matching directory of non-matching files without failing", func(t *testing.T) {
-		e2e.ResetTestDir()
-		dir := e2e.CreateDirectory(e2e.TestDir, e2e.ValidChars(5)+" "+e2e.ValidChars(5))
-		path := e2e.CreateFile(dir, e2e.ValidChars(5)+" "+e2e.ValidChars(5))
+	t.Run("it renames a non-matching directory of non-matching files without failing",
+		func(t *testing.T) {
+			e2e.ResetTestDir()
+			dir := e2e.CreateDirectory(e2e.TestDir, e2e.ValidChars(5)+" "+e2e.ValidChars(5))
+			path := e2e.CreateFile(dir, e2e.ValidChars(5)+" "+e2e.ValidChars(5))
 
-		exitCode, _, _ := e2e.RunExecutable("--fix", path, dir)
-		assert.Equal(t, 0, exitCode)
-		assert.NoDirExists(t, dir)
-		assert.DirExists(t, strings.ReplaceAll(dir, " ", "_"))
-		assert.NoFileExists(t, path)
-		assert.FileExists(t, strings.ReplaceAll(path, " ", "_"))
-	})
+			exitCode, _, _ := e2e.RunExecutable("--fix", path, dir)
+			assert.Equal(t, 0, exitCode)
+			assert.NoDirExists(t, dir)
+			assert.DirExists(t, strings.ReplaceAll(dir, " ", "_"))
+			assert.NoFileExists(t, path)
+			assert.FileExists(t, strings.ReplaceAll(path, " ", "_"))
+		})
 }

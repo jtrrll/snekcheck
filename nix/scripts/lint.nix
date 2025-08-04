@@ -13,7 +13,9 @@ writeShellApplication {
     snekcheck
   ];
   text = ''
-    snekcheck --fix "$PROJECT_ROOT"
+    find "$PROJECT_ROOT" \
+      ! -path "$PROJECT_ROOT/.*" \
+      -exec snekcheck {} +
     nix fmt "$PROJECT_ROOT" -- --quiet
     cd "$SOURCE_ROOT" && go mod tidy && go fmt ./... && go vet ./... && golangci-lint run ./...
     cd "$SPEC_ROOT" && go mod tidy && go fmt ./... && go vet ./... && golangci-lint run ./...

@@ -31,6 +31,7 @@ func main() {
 	if flagSet == nil {
 		panic("failed to initialize flag set")
 	}
+
 	flagSet.Usage = func() {
 		fmt.Fprintf(
 			os.Stderr,
@@ -38,9 +39,11 @@ func main() {
 			flagSet.FlagUsages(),
 		)
 	}
+
 	fix := flagSet.BoolP("fix", "f", false, "Whether to correct invalid filenames")
 	help := flagSet.BoolP("help", "h", false, "Print usage help")
 	verbose := flagSet.BoolP("verbose", "v", false, "Whether to print filenames")
+
 	if flagSet.Parse(os.Args) != nil {
 		panic("failed to parse command line flags and arguments")
 	}
@@ -57,8 +60,10 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 		absPaths[i] = files.NewPath(absPath)
 	}
+
 	err := Run(Config{
 		Fs:      rootFs,
 		Paths:   absPaths,

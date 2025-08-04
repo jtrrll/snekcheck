@@ -1,4 +1,4 @@
-// A collection of regular expressions for filenames.
+// Package patterns is a collection of regular expressions for filenames.
 package patterns
 
 import "regexp"
