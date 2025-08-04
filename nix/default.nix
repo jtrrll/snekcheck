@@ -2,8 +2,8 @@
   imports = [
     ./scripts
 
+    ./checks.nix
     ./devenv.nix
-    ./overlay.nix
     ./packages.nix
   ];
   perSystem = {pkgs, ...}: {

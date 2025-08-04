@@ -1,11 +1,12 @@
 package patterns_test
 
 import (
+	"github.com/jtrrll/snekcheck/internal/patterns"
+
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"snekcheck/internal/patterns"
 )
 
 func BenchmarkSnakeCase(b *testing.B) {
@@ -25,6 +26,7 @@ func FuzzSnakeCase(f *testing.F) {
 	f.Fuzz(func(t *testing.T, input string) {
 		output := patterns.ToSnakeCase(input)
 		assert.True(t, patterns.IsSnakeCase(output))
+
 		if patterns.IsSnakeCase(input) {
 			assert.Equal(t, input, output)
 		}
@@ -37,6 +39,7 @@ func TestSnakeCase(t *testing.T) {
 		t.Parallel()
 		t.Run("identifies valid snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"",
 				"_",
@@ -51,6 +54,7 @@ func TestSnakeCase(t *testing.T) {
 		})
 		t.Run("identifies invalid snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"Snake",
 				"snake case 123",
@@ -66,6 +70,7 @@ func TestSnakeCase(t *testing.T) {
 		t.Parallel()
 		t.Run("does not change valid snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"",
 				"_",
@@ -80,6 +85,7 @@ func TestSnakeCase(t *testing.T) {
 		})
 		t.Run("converts invalid snake case to valid snake case", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []struct {
 				input  string
 				output string

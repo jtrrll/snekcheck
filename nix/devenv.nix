@@ -14,10 +14,8 @@
     ...
   }: {
     devenv = {
-      modules = [
-        inputs.env-help.devenvModule
-      ];
       shells.default = {
+        containers = lib.mkForce {}; # Workaround to remove containers from flake checks.
         enterShell = "${pkgs.writeShellApplication {
           name = "splashScreen";
           runtimeInputs = [
@@ -39,12 +37,10 @@
           SPEC_ROOT = "${PROJECT_ROOT}/spec";
         };
 
-        env-help.enable = true;
-
         languages = {
           go = {
             enable = true;
-            package = self.packages.${system}.snekcheck.go;
+            package = self.packages.${system}.default.go;
           };
           nix.enable = true;
         };

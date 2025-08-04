@@ -1,17 +1,14 @@
 formatters:
   enable:
-    - gci
     - gofmt
+    - goimports
     - golines
 linters:
   default: all
   disable:
     - depguard
-    - errorlint
-    - exhaustruct
     - gochecknoglobals
     - gosec
-    - mnd
     - paralleltest
     - revive
     - wsl

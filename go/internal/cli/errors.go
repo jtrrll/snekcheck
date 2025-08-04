@@ -1,4 +1,4 @@
-// A collection of utilities for building command-line interfaces.
+// Package cli is a collection of utilities for building command-line interfaces.
 package cli
 
 import (
@@ -8,13 +8,13 @@ import (
 	"github.com/fatih/color"
 )
 
-// A command-line error with a status code.
+// Error is a command-line error with a status code.
 type Error interface {
 	error
 	ExitCode() uint8
 }
 
-// Terminates the current program.
+// Exit terminates the current program.
 // Also prints the given error to stderr if present.
 func Exit(err Error) {
 	if err == nil {
@@ -25,6 +25,7 @@ func Exit(err Error) {
 	if code == 0 {
 		os.Exit(0)
 	}
+
 	if code > 125 {
 		panic("invalid exit code")
 	}

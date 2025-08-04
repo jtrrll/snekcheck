@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  self,
   ...
 }: {
   imports = [
@@ -13,14 +14,33 @@
       };
       file = "./default.nix";
     })
-
-    ./bench.nix
-    ./build.nix
-    ./demo.nix
-    ./e2e.nix
-    ./lint.nix
-    ./run.nix
-    ./splash.nix
-    ./unit.nix
   ];
+  perSystem = {
+    pkgs,
+    system,
+    ...
+  }: {
+    scripts = {
+      bench = pkgs.callPackage ./bench.nix {
+        inherit (self.packages.${system}.default) go;
+      };
+      demo = pkgs.callPackage ./demo.nix {
+        snekcheck = self.packages.${system}.default;
+      };
+      e2e = pkgs.callPackage ./e2e.nix {
+        inherit (self.packages.${system}.default) go;
+      };
+      lint = pkgs.callPackage ./lint.nix {
+        inherit (self.packages.${system}.default) go;
+        snekcheck = self.packages.${system}.default;
+      };
+      run = pkgs.callPackage ./run.nix {
+        inherit (self.packages.${system}.default) go;
+      };
+      splash = pkgs.callPackage ./splash.nix {};
+      unit = pkgs.callPackage ./unit.nix {
+        inherit (self.packages.${system}.default) go;
+      };
+    };
+  };
 }

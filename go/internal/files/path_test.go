@@ -7,8 +7,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/jtrrll/snekcheck/internal/files"
+
 	"github.com/stretchr/testify/assert"
-	"snekcheck/internal/files"
 )
 
 func TestPath(t *testing.T) {
@@ -17,6 +18,7 @@ func TestPath(t *testing.T) {
 		t.Parallel()
 		t.Run("creates a path", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"",
 				"longstring",
@@ -32,6 +34,7 @@ func TestPath(t *testing.T) {
 		t.Parallel()
 		t.Run("returns the last element", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -50,6 +53,7 @@ func TestPath(t *testing.T) {
 		t.Parallel()
 		t.Run("returns every element except the last element", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -68,6 +72,7 @@ func TestPath(t *testing.T) {
 		t.Parallel()
 		t.Run("returns the full path", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},
@@ -79,6 +84,7 @@ func TestPath(t *testing.T) {
 		})
 		t.Run("formats correctly as a string", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []files.Path{
 				{"dir", "dir", "file.txt"},
 				{"longstring"},

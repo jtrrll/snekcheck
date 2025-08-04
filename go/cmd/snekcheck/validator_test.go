@@ -3,14 +3,16 @@ package main_test
 import (
 	"testing"
 
+	main "github.com/jtrrll/snekcheck/cmd/snekcheck"
+
 	"github.com/stretchr/testify/assert"
-	main "snekcheck/cmd/snekcheck"
 )
 
 func TestIsValid(t *testing.T) {
 	t.Parallel()
 	t.Run("identifies valid file names", func(t *testing.T) {
 		t.Parallel()
+
 		testCases := []string{
 			"main.go",
 			"flake.nix",
@@ -25,6 +27,7 @@ func TestIsValid(t *testing.T) {
 	})
 	t.Run("identifies invalid file names", func(t *testing.T) {
 		t.Parallel()
+
 		testCases := []string{
 			"Snake",
 			"snake case 123",

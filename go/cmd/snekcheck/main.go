@@ -9,14 +9,14 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"path/filepath"
 
+	"github.com/jtrrll/snekcheck/internal/cli"
+	"github.com/jtrrll/snekcheck/internal/files"
+
 	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/spf13/pflag"
-	"snekcheck/internal/cli"
-	"snekcheck/internal/files"
 )
 
 // The snekcheck CLI builds a runtime configuration for the core process.
@@ -31,6 +31,7 @@ func main() {
 	if flagSet == nil {
 		panic("failed to initialize flag set")
 	}
+
 	flagSet.Usage = func() {
 		fmt.Fprintf(
 			os.Stderr,
@@ -38,15 +39,11 @@ func main() {
 			flagSet.FlagUsages(),
 		)
 	}
-	depth := flagSet.UintP(
-		"depth",
-		"d",
-		math.MaxUint8,
-		"The number of levels to descend into a directory",
-	)
+
 	fix := flagSet.BoolP("fix", "f", false, "Whether to correct invalid filenames")
 	help := flagSet.BoolP("help", "h", false, "Print usage help")
 	verbose := flagSet.BoolP("verbose", "v", false, "Whether to print filenames")
+
 	if flagSet.Parse(os.Args) != nil {
 		panic("failed to parse command line flags and arguments")
 	}
@@ -63,12 +60,13 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 		absPaths[i] = files.NewPath(absPath)
 	}
+
 	err := Run(Config{
 		Fs:      rootFs,
 		Paths:   absPaths,
-		Depth:   *depth,
 		Fix:     *fix,
 		Verbose: *verbose,
 	})

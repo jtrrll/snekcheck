@@ -3,9 +3,10 @@ package patterns_test
 import (
 	"testing"
 
+	"github.com/jtrrll/snekcheck/internal/patterns"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"snekcheck/internal/patterns"
 )
 
 func BenchmarkPosix(b *testing.B) {
@@ -25,6 +26,7 @@ func FuzzPosix(f *testing.F) {
 	f.Fuzz(func(t *testing.T, input string) {
 		output := patterns.ToPosixFileName(input)
 		assert.True(t, patterns.IsPosixFileName(output))
+
 		if patterns.IsPosixFileName(input) {
 			assert.Equal(t, input, output)
 		}
@@ -37,6 +39,7 @@ func TestPosix(t *testing.T) {
 		t.Parallel()
 		t.Run("identifies valid POSIX filenames", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"posix",
 				"POSIX_FILE",
@@ -50,6 +53,7 @@ func TestPosix(t *testing.T) {
 		})
 		t.Run("identifies invalid POSIX filenames", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"-TEST",
 				"lol@email",
@@ -65,6 +69,7 @@ func TestPosix(t *testing.T) {
 		t.Parallel()
 		t.Run("does not change valid POSIX filenames", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []string{
 				"POSIX",
 				".POSIX_123_.md",
@@ -77,6 +82,7 @@ func TestPosix(t *testing.T) {
 		})
 		t.Run("converts invalid POSIX filenames to valid POSIX filenames", func(t *testing.T) {
 			t.Parallel()
+
 			testCases := []struct {
 				input  string
 				output string
