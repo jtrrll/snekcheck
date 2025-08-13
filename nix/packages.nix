@@ -18,7 +18,7 @@
               };
               modRoot = "./go";
               pname = "snekcheck";
-              src = ./../..;
+              src = ./..;
               vendorHash = "sha256-uVjfU3XRqqLj9RwP/eyi+zsi1qYQvWmyCX93SONR3yw=";
               version = "0.1.0";
             }
