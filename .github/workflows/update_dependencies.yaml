@@ -1,15 +1,11 @@
----
 name: Update Dependencies
-
 on:
   schedule:
     - cron: '0 22 * * FRI'
   workflow_dispatch:
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   nix-flake:
     name: Update Nix flake dependencies
@@ -28,4 +24,3 @@ jobs:
             dependencies
             nix
           token: ${{ secrets.UPDATE_DEPENDENCIES_TOKEN }}
-...
