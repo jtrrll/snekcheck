@@ -1,4 +1,4 @@
-// Provides utilities for running end-to-end tests for snekcheck.
+// Package e2e provides utilities for running end-to-end tests for snekcheck.
 package e2e
 
 import (
@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 )
 
-// Runs the snekcheck executable with the provided arguments.
+// RunExecutable runs the snekcheck executable with the provided arguments.
 // Panics if the executable is not found.
 func RunExecutable(args ...string) (int, string, string) {
 	binaryPath := filepath.Join(os.Getenv("PROJECT_ROOT"), "result", "bin", "snekcheck")

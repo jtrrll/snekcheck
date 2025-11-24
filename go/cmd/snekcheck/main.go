@@ -23,9 +23,6 @@ import (
 // Will exit with a non-zero exit code upon failure.
 func main() {
 	rootFs := osfs.New("/")
-	if rootFs == nil {
-		panic("failed to initialize filesystem")
-	}
 
 	flagSet := pflag.NewFlagSet("flags", pflag.ExitOnError)
 	if flagSet == nil {
