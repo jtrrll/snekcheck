@@ -28,7 +28,7 @@ func (p Path) Parent() Path {
 	return p[:len(p)-1]
 }
 
-// Converts a Path to a string by joining the elements with an OS-specific separator.
+// String converts a Path to a string by joining the elements with an OS-specific separator.
 func (p Path) String() string {
 	return filepath.Join(p...)
 }

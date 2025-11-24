@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-find $env.PROJECT_ROOT ! -path $"($env.PROJECT_ROOT)/.*" -exec snekcheck {} +
+^find $env.PROJECT_ROOT ! -path $"($env.PROJECT_ROOT)/.*" -exec snekcheck {} +
 
 nix fmt $env.PROJECT_ROOT -- --quiet
 
