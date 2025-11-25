@@ -13,7 +13,7 @@
                   license = lib.licenses.mit;
                 };
                 src = lib.cleanSource (pkgs.nix-gitignore.gitignoreRecursiveSource [ ] ../../go);
-                vendorHash = "sha256-uVjfU3XRqqLj9RwP/eyi+zsi1qYQvWmyCX93SONR3yw=";
+                vendorHash = "sha256-eeipkAobSq4Nh8zClL5HBRN5wXc2oxkjeqYVh04Zf3c=";
               } args
             );
         in
