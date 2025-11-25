@@ -90,7 +90,7 @@
 
           scripts = lib.mapAttrs (_: pkg: {
             inherit (pkg.meta) description;
-            exec = "${pkg}/bin/${pkg.name} $@";
+            exec = "${lib.getExe pkg} $@";
           }) self'.scripts;
         };
       };

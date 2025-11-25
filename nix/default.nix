@@ -1,10 +1,9 @@
 {
   imports = [
+    ./checks
+    ./dev_shells
+    ./formatter
+    ./packages
     ./scripts
-
-    ./checks.nix
-    ./devenv.nix
-    ./formatter.nix
-    ./packages.nix
   ];
 }
